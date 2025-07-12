@@ -6,8 +6,8 @@ export interface IInitialUserData{
 
 echo "# FrontEnd-Training-Platform-TS-Nextjs" >> README.md
 git init
-git add README.md
+git add .
 git commit -m "first commit"
-git branch -M main
+git branch -M master
 git remote add origin https://github.com/Sheikh-369/FrontEnd-Training-Platform-TS-Nextjs.git
-git push -u origin main
+git push -u origin master
