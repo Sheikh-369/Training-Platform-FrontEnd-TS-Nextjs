@@ -1,4 +1,26 @@
+"use client"
+import { ChangeEvent, FormEvent, useState } from "react";
+import { IInitialUserData } from "./registerTypes";
+
+
 const UserRegister = () => {
+  const [data,setData]=useState<IInitialUserData>({
+    userName:"",
+    userEmail:"",
+    userPassword:""
+  })
+
+  const handleUserDataChange=(e:ChangeEvent<HTMLInputElement>)=>{
+    const {name,value}=e.target
+    setData({
+      ...data,
+      [name]:value
+    })
+  }
+
+  const handleUserDataSubmission=(e:FormEvent<HTMLFormElement>)=>{
+
+  }
   return (
     <>
       <div className="min-h-screen bg-gradient-to-r from-sky-100 to-indigo-100 flex items-center justify-center px-4">
@@ -15,15 +37,17 @@ const UserRegister = () => {
               Sign up for an account
             </h2>
 
-            <form className="mt-6 space-y-5" method="POST">
+            <form onSubmit={handleUserDataSubmission} className="mt-6 space-y-5" method="POST">
               {/* Username */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Username
                 </label>
                 <input
-                  name="username"
+                  onChange={handleUserDataChange}
+                  name="userName"
                   type="text"
+                  value={data.userName}
                   required
                   className="mt-1 w-full rounded-md border border-gray-300 px-3 py-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -35,8 +59,10 @@ const UserRegister = () => {
                   Email
                 </label>
                 <input
-                  name="email"
+                  onChange={handleUserDataChange}
+                  name="userEmail"
                   type="email"
+                  value={data.userEmail}
                   required
                   autoComplete="email"
                   className="mt-1 w-full rounded-md border border-gray-300 px-3 py-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -49,8 +75,10 @@ const UserRegister = () => {
                   Password
                 </label>
                 <input
-                  name="password"
+                  onChange={handleUserDataChange}
+                  name="userPassword"
                   type="password"
+                  value={data.userPassword}
                   required
                   autoComplete="new-password"
                   className="mt-1 w-full rounded-md border border-gray-300 px-3 py-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
