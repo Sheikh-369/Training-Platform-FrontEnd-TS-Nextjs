@@ -1,4 +1,4 @@
-import { Status } from "@/lib/types/type"
+import { Status } from "@/lib/GlobalTypes/type"
 
 export interface IUserData{
     userName:string,

@@ -1,6 +1,10 @@
-import { Status } from "@/lib/types/type";
+import { Status } from "@/lib/GlobalTypes/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState, IUserData } from "./authSliceTypes";
+import API from "@/lib/http";
+import { IInitialUserData } from "@/app/auth/register/registerTypes";
+import { AppDispatch } from "../store";
+
 const initialState:IInitialState={
     user:{
         userName:"",
@@ -9,6 +13,7 @@ const initialState:IInitialState={
     },
     status:Status.LOADING
 }
+
 const authSlice=createSlice({
     name:"auth",
     initialState:initialState,
@@ -17,12 +22,30 @@ const authSlice=createSlice({
             state.user=action.payload
         },
 
-        setState(state:IInitialState,action:PayloadAction<Status>){
+        setStatus(state:IInitialState,action:PayloadAction<Status>){
             state.status=action.payload
         }
     }
 })
 
-const {setUser,setState}=authSlice.actions
-export default authSlice
-export {setUser,setState}
+const {setUser,setStatus}=authSlice.actions
+export default authSlice.reducer
+export {setUser,setStatus}
+
+export function userRegrister(data:IInitialUserData){
+    return async function userRegisterThunk(dispatch:AppDispatch){
+        try {
+            const response=await API.post("register",data)
+            console.log(response)
+            if(response.status===201){
+                //code to if works fine
+                dispatch(setStatus(Status.SUCCESS))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}

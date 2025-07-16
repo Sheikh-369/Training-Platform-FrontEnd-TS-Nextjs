@@ -1,5 +1,5 @@
-"use client"
-import { ChangeEvent, FormEvent, useState } from "react";
+'use client'
+import { ChangeEvent, FormEvent,useState } from "react";
 import { IInitialUserData } from "./registerTypes";
 
 
@@ -19,7 +19,8 @@ const UserRegister = () => {
   }
 
   const handleUserDataSubmission=(e:FormEvent<HTMLFormElement>)=>{
-
+    e.preventDefault()
+    
   }
   return (
     <>
@@ -103,3 +104,4 @@ const UserRegister = () => {
 };
 
 export default UserRegister;
+
