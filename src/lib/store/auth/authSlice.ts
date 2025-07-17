@@ -2,7 +2,6 @@ import { Status } from "@/lib/GlobalTypes/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState, IUserData } from "./authSliceTypes";
 import API from "@/lib/http";
-import { IInitialUserData } from "@/app/auth/register/registerTypes";
 import { AppDispatch } from "../store";
 
 const initialState:IInitialState={
@@ -32,7 +31,7 @@ const {setUser,setStatus}=authSlice.actions
 export default authSlice.reducer
 export {setUser,setStatus}
 
-export function userRegrister(data:IInitialUserData){
+export function userRegrister(data:IUserData){
     return async function userRegisterThunk(dispatch:AppDispatch){
         try {
             const response=await API.post("register",data)

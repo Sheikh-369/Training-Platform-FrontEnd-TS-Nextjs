@@ -1,10 +1,10 @@
 'use client'
 import { ChangeEvent, FormEvent,useState } from "react";
-import { IInitialUserData } from "./registerTypes";
+import { IUserData } from "./registerTypes";
 
 
 const UserRegister = () => {
-  const [data,setData]=useState<IInitialUserData>({
+  const [data,setData]=useState<IUserData>({
     userName:"",
     userEmail:"",
     userPassword:""

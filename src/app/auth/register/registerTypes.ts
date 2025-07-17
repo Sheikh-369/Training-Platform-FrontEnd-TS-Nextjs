@@ -1,4 +1,4 @@
-export interface IInitialUserData{
+export interface IUserData{
     userName:string,
     userEmail:string,
     userPassword:string
