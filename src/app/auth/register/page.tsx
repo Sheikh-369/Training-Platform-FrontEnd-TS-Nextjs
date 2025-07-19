@@ -1,9 +1,12 @@
 'use client'
 import { ChangeEvent, FormEvent,useState } from "react";
 import { IUserData } from "./registerTypes";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { userRegrister } from "@/lib/store/auth/authSlice";
 
 
 const UserRegister = () => {
+  const dispatch=useAppDispatch()
   const [data,setData]=useState<IUserData>({
     userName:"",
     userEmail:"",
@@ -20,7 +23,8 @@ const UserRegister = () => {
 
   const handleUserDataSubmission=(e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    
+    dispatch(userRegrister(data))
+    alert("User Registered Successfully!")
   }
   return (
     <>
