@@ -1,25 +1,31 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from "react"
 import { IUserLoginData } from "./loginTypes"
+import { useAppDispatch } from "@/lib/store/hooks"
+import { loginUser } from "@/lib/store/auth/authSlice"
 
 const userLogin=()=>{
-    const [data,setData]=useState<IUserLoginData>({
-        email:"",
-        password:""
-    })
+  const dispatch=useAppDispatch()
+  const [data,setData]=useState<IUserLoginData>({
+      userEmail:"",
+      userPassword:""
+  })
 
-    const handleLoginChange=(e:ChangeEvent<HTMLInputElement>)=>{
-        const {name,value}=e.target
-        setData({
-            ...data,
-        [name]:value
-        })
-    }
+  const handleLoginChange=(e:ChangeEvent<HTMLInputElement>)=>{
+      const {name,value}=e.target
+      setData({
+          ...data,
+      [name]:value
+      })
+  }
 
-    const handleLoginSubmission=(e:FormEvent<HTMLFormElement>)=>{
-        e.preventDefault()
-    }
-    return(
+  const handleLoginSubmission=(e:FormEvent<HTMLFormElement>)=>{
+      e.preventDefault()
+      dispatch(loginUser(data))
+
+        
+  }
+  return(
         <>
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
   <div className="max-w-xl py-6 px-8 bg-white rounded shadow-xl">
@@ -29,9 +35,9 @@ const userLogin=()=>{
         <label htmlFor="email" className="block text-gray-800 font-bold">Email:</label>
         <input
           onChange={handleLoginChange}
-          value={data.email}
+          value={data.userEmail}
           type="email"
-          name="email"
+          name="userEmail"
           id="email"
           placeholder="your@email.com"
           className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 ring-indigo-600"
@@ -44,9 +50,9 @@ const userLogin=()=>{
         <label htmlFor="password" className="block text-gray-800 font-bold">Password:</label>
         <input
           onChange={handleLoginChange}
-          value={data.password}
+          value={data.userPassword}
           type="password"
-          name="password"
+          name="userPassword"
           id="password"
           placeholder="••••••••"
           className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 ring-indigo-600"

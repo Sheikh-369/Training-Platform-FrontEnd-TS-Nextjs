@@ -1,5 +1,5 @@
 
 export interface IUserLoginData{
-    email:string,
-    password:string
+    userEmail:string,
+    userPassword:string
 }

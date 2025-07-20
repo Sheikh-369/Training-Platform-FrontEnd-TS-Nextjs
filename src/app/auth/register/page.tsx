@@ -1,13 +1,13 @@
 'use client'
 import { ChangeEvent, FormEvent,useState } from "react";
-import { IUserData } from "./registerTypes";
+import { IRegisterUserData } from "./registerTypes";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { userRegrister } from "@/lib/store/auth/authSlice";
+import { registerUser } from "@/lib/store/auth/authSlice";
 
 
-const UserRegister = () => {
+const userRegister = () => {
   const dispatch=useAppDispatch()
-  const [data,setData]=useState<IUserData>({
+  const [data,setData]=useState<IRegisterUserData>({
     userName:"",
     userEmail:"",
     userPassword:""
@@ -23,7 +23,7 @@ const UserRegister = () => {
 
   const handleUserDataSubmission=(e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    dispatch(userRegrister(data))
+    dispatch(registerUser(data))
     alert("User Registered Successfully!")
   }
   return (
@@ -107,5 +107,5 @@ const UserRegister = () => {
   );
 };
 
-export default UserRegister;
+export default userRegister;
 
