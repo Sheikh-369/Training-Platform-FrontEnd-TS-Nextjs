@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react"
 import { IUserLoginData } from "./loginTypes"
 import { useAppDispatch } from "@/lib/store/hooks"
 import { loginUser } from "@/lib/store/auth/authSlice"
+import { Status } from "@/lib/GlobalTypes/type"
 
 const userLogin=()=>{
   const dispatch=useAppDispatch()
@@ -21,9 +22,7 @@ const userLogin=()=>{
 
   const handleLoginSubmission=(e:FormEvent<HTMLFormElement>)=>{
       e.preventDefault()
-      dispatch(loginUser(data))
-
-        
+      dispatch(loginUser(data))   
   }
   return(
         <>

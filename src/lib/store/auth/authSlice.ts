@@ -1,7 +1,7 @@
 import { Status } from "@/lib/GlobalTypes/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState, IUserData,  } from "./authSliceTypes";
-import API from "@/lib/http";
+import API from "@/lib/http/OnlyAPI";
 import { AppDispatch } from "../store";
 import { IUserLoginData } from "@/app/auth/login/loginTypes";
 import { IRegisterUserData } from "@/app/auth/register/registerTypes";
