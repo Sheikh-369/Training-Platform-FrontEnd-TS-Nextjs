@@ -1,4 +1,4 @@
-import { IInstituteData } from "@/app/institute/instituteTypes";
+import { IInstituteData } from "@/app/institute/register/instituteTypes";
 import { Status } from "@/lib/GlobalTypes/type";
 
 export interface IInitialInstitute{

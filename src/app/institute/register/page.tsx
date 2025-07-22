@@ -2,8 +2,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IInstituteData } from "./instituteTypes";
 
-
-
 const Institute = () => {
   const [instituteData, setInstituteData] = useState<IInstituteData>({
     instituteName: "",
@@ -36,7 +34,11 @@ const Institute = () => {
         Register Your Institute
       </div>
 
-      <form className="py-4 px-6" method="POST" onSubmit={instituteDataSubmission}>
+      <form
+        className="py-4 px-6"
+        method="POST"
+        onSubmit={instituteDataSubmission}
+      >
         {/* Institute Name */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
@@ -87,7 +89,10 @@ const Institute = () => {
 
         {/* Address */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="address">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="address"
+          >
             Institute Address
           </label>
           <input
@@ -103,7 +108,10 @@ const Institute = () => {
 
         {/* Dropdown to select PAN/VAT */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="idType">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="idType"
+          >
             Select ID Type
           </label>
           <select
@@ -121,13 +129,18 @@ const Institute = () => {
         {/* Conditionally show input based on selected type */}
         {idType && (
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="idValue">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="idValue"
+            >
               {idType} Number
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="idValue"
-              name={idType === "PAN" ? "institutePanNumber" : "instituteVatNumber"}
+              name={
+                idType === "PAN" ? "institutePanNumber" : "instituteVatNumber"
+              }
               type="text"
               placeholder={`Enter your ${idType} number`}
               value={

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialInstitute } from "./instituteSliceTypes";
 import { Status } from "@/lib/GlobalTypes/type";
-import { IInstituteData } from "@/app/institute/instituteTypes";
+import { IInstituteData } from "@/app/institute/register/instituteTypes";
 import APIWITHTOKEN from "@/lib/http/APIWithToken";
 import { AppDispatch } from "../store";
 const initialState:IInitialInstitute={
