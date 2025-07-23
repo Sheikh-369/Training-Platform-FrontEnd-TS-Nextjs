@@ -1,8 +1,11 @@
 "use client";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IInstituteData } from "./instituteTypes";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { createInstitute } from "@/lib/store/institute/instituteSlice";
 
 const Institute = () => {
+  const dispatch=useAppDispatch()
   const [instituteData, setInstituteData] = useState<IInstituteData>({
     instituteName: "",
     instituteEmail: "",
@@ -24,6 +27,8 @@ const Institute = () => {
 
   const instituteDataSubmission = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(createInstitute(instituteData))
+    alert("Institute created successfully!")
     console.log("Submitted Institute Data:", instituteData);
     // You can add form submission logic here (e.g., API call)
   };
