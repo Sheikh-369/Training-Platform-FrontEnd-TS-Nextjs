@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/lib/store/hooks";
 import { registerUser } from "@/lib/store/auth/authSlice";
 
 
-const userRegister = () => {
+const UserRegister = () => {
   const dispatch=useAppDispatch()
   const [data,setData]=useState<IRegisterUserData>({
     userName:"",
@@ -107,5 +107,5 @@ const userRegister = () => {
   );
 };
 
-export default userRegister;
+export default UserRegister;
 

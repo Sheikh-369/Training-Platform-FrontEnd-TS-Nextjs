@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/lib/store/hooks"
 import { loginUser } from "@/lib/store/auth/authSlice"
 import { Status } from "@/lib/GlobalTypes/type"
 
-const userLogin=()=>{
+const UserLogin=()=>{
   const dispatch=useAppDispatch()
   const [data,setData]=useState<IUserLoginData>({
       userEmail:"",
@@ -79,4 +79,4 @@ const userLogin=()=>{
     )
 }
 
-export default userLogin
+export default UserLogin
