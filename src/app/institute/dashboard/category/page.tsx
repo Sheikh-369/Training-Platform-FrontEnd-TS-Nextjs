@@ -1,5 +1,4 @@
 "use client"
-
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks"
 import { fetchCategory } from "@/lib/store/institute/category/categorySlice"
 import { ICategoryData } from "@/lib/store/institute/category/categorySliceTypes"
