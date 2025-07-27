@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICategoryData, IInitialCategoryData } from "./categorySliceTypes";
+import { ICategoryData, ICategoryDataModal, IInitialCategoryData } from "./categorySliceTypes";
 import { Status } from "@/lib/GlobalTypes/type";
 import APIWITHTOKEN from "@/lib/http/APIWithToken";
 import { AppDispatch } from "../../store";
@@ -42,10 +42,10 @@ export function fetchCategory(){
 }
 
 //add category
-export function addCategory(data:ICategoryData){
+export function addCategory(categoryData:ICategoryDataModal){
     return async function addCategoryThunk(dispatch:AppDispatch){
         try {
-            const response=await APIWITHTOKEN.post("institute/category",data)
+            const response=await APIWITHTOKEN.post("institute/category",categoryData)
             if(response.status===200){
                 dispatch(setStatus(Status.SUCCESS))
             }else{

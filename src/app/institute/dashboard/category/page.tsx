@@ -1,23 +1,28 @@
 "use client"
+import Modal from "@/lib/components/modal/modal"
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks"
 import { fetchCategory } from "@/lib/store/institute/category/categorySlice"
 import { ICategoryData } from "@/lib/store/institute/category/categorySliceTypes"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 function InstituteCategory(){
-    const {data:categories}=useAppSelector((store)=>store.category)
-    const dispatch=useAppDispatch()
-    useEffect(()=>{
-        dispatch(fetchCategory())
+  const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
+  const openModal=()=>setIsModalOpen(true)
+  const closeModal=()=>setIsModalOpen(false)
+  const {data:categories}=useAppSelector((store)=>store.category)
+  const dispatch=useAppDispatch()
+  useEffect(()=>{
+      dispatch(fetchCategory())
     },[])
 
-    return(
+  return(
         <>
             {/* Table */}
             <div className="flex flex-col">
   <div className=" overflow-x-auto">
+    {isModalOpen && <Modal closeModal={closeModal}/>}
     <div className="min-w-full inline-block align-middle">
-      <div className="relative  text-gray-500 focus-within:text-gray-900 mb-4">
+      <div className="flex justify-between relative  text-gray-500 focus-within:text-gray-900 mb-4">
         <div className="absolute inset-y-0 left-1 flex items-center pl-3 pointer-events-none ">
           <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.5 17.5L15.4167 15.4167M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C11.0005 15.8333 12.6614 15.0929 13.8667 13.8947C15.0814 12.6872 15.8333 11.0147 15.8333 9.16667Z" stroke="#9CA3AF" strokeWidth="1.6" strokeLinecap="round" />
@@ -26,6 +31,7 @@ function InstituteCategory(){
           </svg>
         </div>
         <input type="text" id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for category" />
+        <button onClick={openModal} className="bg-green-500 rounded p-1 text-white cursor-pointer">+Category</button>
       </div>
       <div className="overflow-hidden ">
         <table className=" min-w-full rounded-xl">
