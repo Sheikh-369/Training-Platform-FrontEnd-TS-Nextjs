@@ -16,11 +16,15 @@ const categorySlice=createSlice({
         },
         setStatus(state:IInitialCategoryData,action:PayloadAction<Status>){
             state.status=action.payload
+        },
+        //deleting category(step1)
+        removeCategory(state: IInitialCategoryData, action: PayloadAction<string>){
+            state.data = state.data.filter(category => category.id !== action.payload);
         }
     }
 })
 
-const {setData,setStatus}=categorySlice.actions
+const {setData,setStatus,removeCategory}=categorySlice.actions
 export default categorySlice.reducer
 
 // fetch category
@@ -63,10 +67,12 @@ export function addCategory(categoryData:ICategoryDataModal){
 export function deleteCategory(id:string){
     return async function deleteCategoryThunk(dispatch:AppDispatch){
         try {
-            const response=await APIWITHTOKEN.delete("category"+id)
+            const response=await APIWITHTOKEN.delete("institute/category/"+id)
             if(response.status===200){
                 dispatch(setStatus(Status.SUCCESS))
-                response.data.data.length>0 && dispatch(setData(response.data.data))
+                dispatch(removeCategory(id))//(step2)// Update UI immediately
+                dispatch(fetchCategory())//(step2) // Refresh full list to sync backend
+                // response.data.data.length>0 && dispatch(setData(response.data.data))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }          
