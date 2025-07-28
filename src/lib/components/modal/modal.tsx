@@ -27,6 +27,7 @@ const Modal:React.FC<ICloseModal>=({closeModal})=>{
     const handleCategorySubmission=(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         dispatch(addCategory(categoryData))
+        closeModal();
     }
     return(
         <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center">

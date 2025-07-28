@@ -48,6 +48,7 @@ export function addCategory(categoryData:ICategoryDataModal){
             const response=await APIWITHTOKEN.post("institute/category",categoryData)
             if(response.status===200){
                 dispatch(setStatus(Status.SUCCESS))
+                dispatch(fetchCategory());//all data gets fetched after addition
             }else{
                 dispatch(setStatus(Status.ERROR))
             }          
