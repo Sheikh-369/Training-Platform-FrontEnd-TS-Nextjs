@@ -7,9 +7,12 @@ import { useEffect, useState } from "react"
 
 function InstituteCategory(){
   const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
+  const [searchedText,setSearchedText] = useState<string>("")
   const openModal=()=>setIsModalOpen(true)
   const closeModal=()=>setIsModalOpen(false)
   const {data:categories}=useAppSelector((store)=>store.category)
+  console.log("categories", categories);
+
   const dispatch=useAppDispatch()
   useEffect(()=>{
       dispatch(fetchCategory())
@@ -20,6 +23,16 @@ function InstituteCategory(){
     dispatch(deleteCategory(id));
     }
   }
+
+  const filteredData = categories.filter((category) => {const searchLower = searchedText.toLowerCase();
+  return (
+    category.categoryName.toLowerCase().includes(searchLower) ||(category.id?.toString() ?? "").toLowerCase().includes(searchLower) ||category.categoryDescription.toLowerCase().includes(searchLower)
+  );
+});
+
+
+
+
 
   return(
         <>
@@ -37,7 +50,7 @@ function InstituteCategory(){
             <path d="M17.5 17.5L15.4167 15.4167M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C11.0005 15.8333 12.6614 15.0929 13.8667 13.8947C15.0814 12.6872 15.8333 11.0147 15.8333 9.16667Z" stroke="black" strokeOpacity="0.2" strokeWidth="1.6" strokeLinecap="round" />
           </svg>
         </div>
-        <input type="text" id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for category" />
+        <input onChange={(e)=>setSearchedText(e.target.value)} type="text" value={searchedText}  id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for category" />
         <button onClick={openModal} className="bg-green-500 rounded p-1 text-white cursor-pointer">+Category</button>
       </div>
       <div className="overflow-hidden ">
@@ -53,9 +66,10 @@ function InstituteCategory(){
           </thead>
           <tbody className="divide-y divide-gray-300 ">
 
-            {categories.length > 0 && categories.map((category:ICategoryData) => (
+            {filteredData.length > 0 && filteredData.map((category:ICategoryData) => {
+              return(
             // JSX goes here
-            <tr key={category.id} className="bg-white transition-all duration-500 hover:bg-gray-50">
+            <tr key={category?.id} className="bg-white transition-all duration-500 hover:bg-gray-50">
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 ">{category?.id}</td>
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{category.categoryName}</td>
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{category.categoryDescription}</td>
@@ -81,8 +95,9 @@ function InstituteCategory(){
                   </button>
                 </div>
               </td>
-            </tr>    
-            ))}
+            </tr>
+            )    
+          })}
           </tbody>
         </table>
       </div>
