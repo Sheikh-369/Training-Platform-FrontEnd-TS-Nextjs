@@ -71,7 +71,6 @@ export function deleteCategory(id:string){
             if(response.status===200){
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(removeCategory(id))//(step2)// Update UI immediately
-                dispatch(fetchCategory())//(step2) // Refresh full list to sync backend
                 // response.data.data.length>0 && dispatch(setData(response.data.data))
             }else{
                 dispatch(setStatus(Status.ERROR))
