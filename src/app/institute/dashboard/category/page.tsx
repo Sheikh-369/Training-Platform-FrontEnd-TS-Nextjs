@@ -26,12 +26,8 @@ function InstituteCategory(){
 
   const filteredData = categories.filter((category) => {const searchLower = searchedText.toLowerCase();
   return (
-    category.categoryName.toLowerCase().includes(searchLower) ||(category.id?.toString() ?? "").toLowerCase().includes(searchLower) ||category.categoryDescription.toLowerCase().includes(searchLower)
-  );
-});
-
-
-
+    category.categoryName.toLowerCase().includes(searchLower) ||(category.id?.toString() ?? "").toLowerCase().includes(searchLower) ||category.categoryDescription.toLowerCase().includes(searchLower));
+    });
 
 
   return(
