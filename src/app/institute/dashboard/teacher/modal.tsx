@@ -1,3 +1,4 @@
+import { Status } from "@/lib/GlobalTypes/type"
 import { useAppDispatch } from "@/lib/store/hooks"
 import { addTeacher } from "@/lib/store/institute/teacher/teacherSlice"
 import { ITeacherDataModal } from "@/lib/store/institute/teacher/teacherSliceTypes"
@@ -27,10 +28,11 @@ const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
         })
     }
 
-    const handleTeacherDataSubmission=(e:FormEvent<HTMLFormElement>)=>{
+    const handleTeacherDataSubmission=async (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        dispatch(addTeacher(teacherData))
+        await dispatch(addTeacher(teacherData))
         closeModal()
+        
     }
 
     return(

@@ -13,7 +13,7 @@ function Teacher(){
     const dispatch=useAppDispatch()
     useEffect(()=>{
         dispatch(fetchTeacher())
-    },[])
+    },[dispatch])
     return(
         <>
             {/* Table */}
