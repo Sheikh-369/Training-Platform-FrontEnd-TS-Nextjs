@@ -80,3 +80,21 @@ export function deleteStudent(id:string){
         }
     }
 }
+
+// updateStudent
+export function updateStudent(id: string, name: IStudentDataModal) {
+  return async function updateStudentThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.patch("institute/student/"+id, name);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchStudent()); // Refresh data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}

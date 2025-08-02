@@ -60,3 +60,22 @@ export function addTeacher(teacherData:ITeacherDataModal){
        } 
     }
 }
+
+//deleteTeacher
+export function deleteTeacher(id:string){
+    return async function deleteTeacherThunk(dispatch:AppDispatch){
+        try {
+            const response=await APIWITHTOKEN.delete("institute/teacher/"+id)
+            if(response.status===200){
+                dispatch(setStatus(Status.SUCCESS))
+                dispatch(fetchTeacher())
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+            
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}

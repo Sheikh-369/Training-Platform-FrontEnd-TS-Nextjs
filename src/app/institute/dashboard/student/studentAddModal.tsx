@@ -7,7 +7,7 @@ interface ICloseModal{
     closeModal:()=>void
 }
 
-const StudentModal:React.FC<ICloseModal>=({closeModal})=>{
+const StudentAddModal:React.FC<ICloseModal>=({closeModal})=>{
     const dispatch=useAppDispatch()
     const [studentData,setStudentData]=useState<IStudentDataModal>({
         studentName:"",
@@ -75,4 +75,4 @@ const StudentModal:React.FC<ICloseModal>=({closeModal})=>{
 
     )
 }
-export default StudentModal
+export default StudentAddModal

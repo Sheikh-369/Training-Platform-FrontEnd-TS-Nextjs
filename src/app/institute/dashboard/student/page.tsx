@@ -3,15 +3,18 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks"
 import { deleteStudent, fetchStudent } from "@/lib/store/institute/student/studentSlice"
 import { IStudentData } from "@/lib/store/institute/student/studentSliceTypes"
 import { useEffect, useState } from "react"
-import StudentModal from "./studentMofal"
+import StudentAddModal from "./studentAddModal"
 
 function Student(){
+  
   const[searchedText,setSearchedText]=useState("")
     const dispatch=useAppDispatch()
     const {student:students}=useAppSelector((store)=>store.student)
     const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
     const openModal=()=>setIsModalOpen(true)
     const closeModal=()=>setIsModalOpen(false)
+
+
 
     const filteredData=students.filter((student)=>{
       const searchLower=searchedText.toLowerCase()
@@ -30,13 +33,16 @@ function Student(){
       }
       
     }
+
+    
     return(
         <>
         {/* Table */}
         <div className="flex flex-col">
           <div className=" overflow-x-auto">
             {/* modal */}
-            {isModalOpen && <StudentModal closeModal={closeModal}/>}
+            {isModalOpen && <StudentAddModal closeModal={closeModal}/>}
+
             <div className="min-w-full inline-block align-middle">
               <div className="flex justify-between relative  text-gray-500 focus-within:text-gray-900 mb-4">
                 <div className="absolute inset-y-0 left-1 flex items-center pl-3 pointer-events-none ">
@@ -46,7 +52,7 @@ function Student(){
                     <path d="M17.5 17.5L15.4167 15.4167M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C11.0005 15.8333 12.6614 15.0929 13.8667 13.8947C15.0814 12.6872 15.8333 11.0147 15.8333 9.16667Z" stroke="black" strokeOpacity="0.2" strokeWidth="1.6" strokeLinecap="round" />
                   </svg>
                 </div>
-                <input onChange={(e)=>setSearchedText(e.target.value)} value={searchedText} type="text" id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for category" />
+                <input onChange={(e)=>setSearchedText(e.target.value)} value={searchedText} type="text" id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for student" />
                 <button onClick={openModal} className="bg-green-500 rounded p-1 text-white cursor-pointer">+Student</button>
               </div>
               <div className="overflow-hidden ">
