@@ -47,7 +47,11 @@ export function fetchTeacher(){
 export function addTeacher(teacherData:ITeacherDataModal){
     return async function addTeacherThunk(dispatch:AppDispatch) {
        try {
-        const response=await APIWITHTOKEN.post("institute/teacher",teacherData)
+        const response=await APIWITHTOKEN.post("institute/teacher",teacherData,{
+                headers : {
+                    "Content-Type" : "multipart/form-data"
+                }
+            })
        if(response.status===200){
         dispatch(setStatus(Status.SUCCESS))
         dispatch(fetchTeacher());

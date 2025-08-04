@@ -3,13 +3,20 @@ import { useAppSelector } from "@/lib/store/hooks"
 import { fetchCourse } from "@/lib/store/institute/course/courseSlice"
 import { ICourseData } from "@/lib/store/institute/course/courseSliceTypes"
 import { AppDispatch } from "@/lib/store/store"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import CourseAddModal from "./courseAddModal"
 
 function Course(){
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
 const course = useAppSelector((store) => store.course.course);
+  
 
     const dispatch=useDispatch<AppDispatch>()
+
     useEffect(()=>{
         dispatch(fetchCourse())
     },[])
@@ -19,7 +26,7 @@ const course = useAppSelector((store) => store.course.course);
             <div className="flex flex-col">
   <div className=" overflow-x-auto">
     {/* modal */}
-    {/* {isModalOpen && <Modal closeModal={closeModal}/>} */}
+    {isModalOpen && <CourseAddModal closeModal={closeModal}/>}
     <div className="min-w-full inline-block align-middle">
       <div className="flex justify-between relative  text-gray-500 focus-within:text-gray-900 mb-4">
         <div className="absolute inset-y-0 left-1 flex items-center pl-3 pointer-events-none ">
@@ -30,7 +37,7 @@ const course = useAppSelector((store) => store.course.course);
           </svg>
         </div>
         <input type="text" id="default-search" className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none" placeholder="Search for category" />
-        <button className="bg-green-500 rounded p-1 text-white cursor-pointer">+Course</button>
+        <button onClick={openModal} className="bg-green-500 rounded p-1 text-white cursor-pointer">+Course</button>
       </div>
       <div className="overflow-hidden ">
         <table className=" min-w-full rounded-xl">
@@ -42,8 +49,8 @@ const course = useAppSelector((store) => store.course.course);
               <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize">Duration</th>
               <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">Description</th>
               <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">Level</th>
-              <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">CategoryId</th>
-              <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">TeacherId</th>
+              <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">Category</th>
+              <th scope="col" className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl">Teacher</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300 ">
@@ -55,8 +62,9 @@ const course = useAppSelector((store) => store.course.course);
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.courseDuration}</td>
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.courseDescription}</td>
               <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.courseLevel}</td>
-              <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.categoryId}</td>
-              <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.teacherId}</td>
+              <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.categoryName}
+              </td>
+              <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">{course?.teacherName}</td>
               <td className=" p-5 ">
                 <div className="flex items-center gap-1">
                   <button className="p-2  rounded-full  group transition-all duration-500  flex item-center">

@@ -53,6 +53,7 @@ export function addCourse(courseData:ICourseData){
             const response=await APIWITHTOKEN.post("institute/course",courseData)
         if(response.status===200){
             dispatch(setStatus(Status.SUCCESS))
+            dispatch(fetchCourse())
         }else{
             dispatch(setStatus(Status.ERROR))
         }

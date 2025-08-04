@@ -2,7 +2,7 @@ import { Status } from "@/lib/GlobalTypes/type"
 import { useAppDispatch } from "@/lib/store/hooks"
 import { addTeacher } from "@/lib/store/institute/teacher/teacherSlice"
 import { ITeacherDataModal } from "@/lib/store/institute/teacher/teacherSliceTypes"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 interface ICloseModal{
     closeModal:()=>void
@@ -10,30 +10,32 @@ interface ICloseModal{
 
 const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
     const [teacherData,setTeacherData]=useState<ITeacherDataModal>({
-        teacherName:"",
+    teacherName:"",
     teacherEmail:"",
     teacherPhoneNumber:"",
     teacherExpertise:"",
     teacherJoinDate:"",
-    teacherSalary:""
+    teacherSalary:"",
+    teacherImage:null  //1
     })
 
     const dispatch=useAppDispatch()
 
-    const handleTeacherDataChange=(e:ChangeEvent<HTMLInputElement>)=>{
+    const handleTeacherDataChange=(e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>)=>{
         const {name,value}=e.target
         setTeacherData({
             ...teacherData,
-            [name]:value
+            //@ts-ignore
+            [name]:name === "teacherImage" ? e.target.files[0] : value //2
         })
     }
 
     const handleTeacherDataSubmission=async (e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         await dispatch(addTeacher(teacherData))
-        closeModal()
-        
+        closeModal()    
     }
+
 
     return(
         <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center">
@@ -62,6 +64,13 @@ const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
         <div>
           <label htmlFor="teacherEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
           <input onChange={handleTeacherDataChange} name="teacherEmail" id="teacherEmail" type="email" placeholder="malik@gmail.com"
+            className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+            required />
+        </div>
+        {/* teacher Image */}
+        <div>
+          <label htmlFor="teacherEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Teacher Image</label>
+          <input onChange={handleTeacherDataChange} name="teacherImage" id="teacherEmail" type="file" placeholder="malik@gmail.com"
             className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
             required />
         </div>

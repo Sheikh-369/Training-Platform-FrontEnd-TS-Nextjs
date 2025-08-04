@@ -6,11 +6,13 @@ export interface ITeacherDataModal{
     teacherPhoneNumber:string,
     teacherExpertise:string,
     teacherJoinDate:string,
-    teacherSalary:string
+    teacherSalary:string,
+    teacherImage:File |string | null //3
 }
 
 export interface ITeacherData extends ITeacherDataModal{
     id:string,
+    teacherId:string | number,
     
 }
 
