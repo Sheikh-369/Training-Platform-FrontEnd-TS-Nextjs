@@ -32,6 +32,7 @@ const StudentEditModal: React.FC<Props> = ({ student, closeModal }) => {
 
   return (
     <div className="modal">
+      <form onSubmit={handleSubmit}>
       <div className="modal-content p-4 bg-white shadow-lg rounded">
         <h2 className="text-xl font-bold mb-4">Edit Student</h2>
         <input name="studentName" value={form.studentName} onChange={handleChange} placeholder="Name" />
@@ -40,9 +41,10 @@ const StudentEditModal: React.FC<Props> = ({ student, closeModal }) => {
         <input name="enrolledDate" value={form.enrolledDate} onChange={handleChange} placeholder="Enroll Date" />
         <div className="flex justify-end gap-2 mt-4">
           <button onClick={closeModal} className="bg-gray-300 px-3 py-1">Cancel</button>
-          <button onClick={handleSubmit} className="bg-blue-500 text-white px-3 py-1">Update</button>
+          <button type="submit" className="bg-blue-500 text-white px-3 py-1">Update</button>
         </div>
       </div>
+      </form>
     </div>
   );
 };
