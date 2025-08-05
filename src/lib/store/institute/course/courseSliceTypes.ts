@@ -9,7 +9,8 @@ export interface ICourseData{
     courseLevel:string,
     categoryName:string,
     teacherName:string,
-    teacherId:string | number
+    teacherId:string | number,
+    categoryId:string | number
 }
 
 export interface IInitialStateCourseData{

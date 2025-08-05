@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ICourseData } from "@/lib/store/institute/course/courseSliceTypes";
-import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/lib/store/store";
 import { addCourse, fetchCourse } from "@/lib/store/institute/course/courseSlice";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { fetchTeacher } from "@/lib/store/institute/teacher/teacherSlice";
+import { fetchCategory } from "@/lib/store/institute/category/categorySlice";
 
 interface ICloseModal {
   closeModal: () => void;
@@ -12,7 +12,8 @@ interface ICloseModal {
 }
 
 const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
+  const {data:categories}=useAppSelector((store)=>store.category)
   const {teacher:teachers}=useAppSelector((store)=>store.teacher)
   const [courseData, setCourseData] = useState<ICourseData>({
     id: "",
@@ -23,7 +24,8 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
     courseLevel: "",
     teacherName:"",
     categoryName:"",
-    teacherId:""
+    teacherId:"",
+    categoryId:""
     
   });
 
@@ -44,6 +46,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
 
   useEffect(()=>{
     dispatch(fetchTeacher())
+    dispatch(fetchCategory())
   },[])
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
@@ -101,6 +104,22 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
   <option value="beginner">Beginner</option>
   <option value="intermediate">Intermediate</option>
   <option value="advance">Advance</option>
+</select>
+
+<select
+  name="categoryId"
+  value={courseData.categoryId}
+  onChange={handleChange}
+  className="border border-gray-300 p-2 w-full mb-3 rounded"
+  required
+>
+  <option value="">Select category</option>
+  {categories.length > 0 &&
+    categories.map((category) => (
+      <option key={category.id} value={category.id}>
+        {category.categoryName}
+      </option>
+    ))}
 </select>
 
         <select
