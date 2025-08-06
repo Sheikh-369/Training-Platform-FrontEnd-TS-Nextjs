@@ -1,7 +1,7 @@
 import { Status } from "@/lib/GlobalTypes/type"
 
 export interface ICourseData{
-    id:string | number,
+    id:string,
     courseName:string,
     coursePrice:string,
     courseDuration:string,

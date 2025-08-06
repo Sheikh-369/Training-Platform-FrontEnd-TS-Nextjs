@@ -63,3 +63,21 @@ export function addCourse(courseData:ICourseData){
         }
     }
 }
+
+//delete course
+export function deleteCourse(id:string){
+    return async function deleteCourseThunk(dispatch:AppDispatch){
+        try {
+            const response=await APIWITHTOKEN.delete("institute/course/"+id)
+        if(response.status===200){
+            dispatch(setStatus(Status.SUCCESS))
+            dispatch(fetchCourse())
+        }else{
+            dispatch(setStatus(Status.ERROR))
+        }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}
