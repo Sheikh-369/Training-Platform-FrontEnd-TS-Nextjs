@@ -83,3 +83,21 @@ export function deleteTeacher(id:string){
         }
     }
 }
+
+// updateTeacher
+export function updateTeacher(id: string, name: ITeacherDataModal) {
+  return async function updateTeacherThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.patch("institute/teacher/"+id, name);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchTeacher()); // Refresh data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}

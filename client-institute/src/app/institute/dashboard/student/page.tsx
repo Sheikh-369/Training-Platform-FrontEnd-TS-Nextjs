@@ -10,10 +10,12 @@ function Student(){
   const [editModalOpen, setEditModalOpen] = useState(false);//edit part
   const [selectedStudent, setSelectedStudent] = useState<IStudentData | null>(null);//edit part
 
-  const[searchedText,setSearchedText]=useState("")
+  const[searchedText,setSearchedText]=useState("")//search part
+
     const dispatch=useAppDispatch()
-    const {student:students}=useAppSelector((store)=>store.student)
-    const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
+    const {student:students}=useAppSelector((store)=>store.student)//fetching student
+
+    const [isModalOpen,setIsModalOpen]=useState<boolean>(false)//modal to add student
     const openModal=()=>setIsModalOpen(true)
     const closeModal=()=>setIsModalOpen(false)
 
@@ -38,16 +40,16 @@ function Student(){
     }
 
     //edit part
-    const openEditModal = (student: IStudentData) => {
-  setSelectedStudent(student);
-  setEditModalOpen(true);
-};
+  const openEditModal = (student: IStudentData) => {
+    setSelectedStudent(student);
+    setEditModalOpen(true);
+  };
 
-//edit part
-const closeEditModal = () => {
-  setEditModalOpen(false);
-  setSelectedStudent(null);
-};
+  //edit part
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+    setSelectedStudent(null);
+  };
     
     return(
         <>

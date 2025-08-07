@@ -81,3 +81,21 @@ export function deleteCategory(id:string){
         }
     }
 }
+
+// updateCategory
+export function updateCategory(id: string, name: ICategoryDataModal) {
+  return async function updateCategoryThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.patch("institute/category/"+id, name);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchCategory()); // Refresh data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
