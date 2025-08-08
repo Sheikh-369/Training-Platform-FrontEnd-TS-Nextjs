@@ -1,65 +1,48 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { ICourseData } from "@/lib/store/institute/course/courseSliceTypes";
-import { addCourse } from "@/lib/store/institute/course/courseSlice";
+import React, { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { fetchTeacher } from "@/lib/store/institute/teacher/teacherSlice";
-import { fetchCategory } from "@/lib/store/institute/category/categorySlice";
+import { ICourseData } from "@/lib/store/institute/course/courseSliceTypes";
+import { updateCourse } from "@/lib/store/institute/course/courseSlice";
 
-interface ICloseModal {
+interface Props {
+//   course: ICourseData;
   closeModal: () => void;
-  
+  initialData: ICourseData; // for Pre-filled course data
 }
 
-const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
+const CourseEditModal: React.FC<Props> = ({ initialData, closeModal }) => {
   const dispatch = useAppDispatch();
-  const {data:categories}=useAppSelector((store)=>store.category)
-  const {teacher:teachers}=useAppSelector((store)=>store.teacher)
-  const [courseData, setCourseData] = useState<ICourseData>({
-    id: "",
-    courseName: "",
-    coursePrice: "",
-    courseDuration: "",
-    courseDescription: "",
-    courseLevel: "",
-    teacherName:"",
-    categoryName:"",
-    teacherId:"",
-    categoryId:""
-    
-  });
+  const { data: categories } = useAppSelector((store) => store.category);
+  const { teacher: teachers } = useAppSelector((store) => store.teacher);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const [courseData, setCourseData] = useState<ICourseData>(initialData);
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setCourseData({
       ...courseData,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await dispatch(addCourse(courseData));
+  const handleEditSubmit = async(e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    await dispatch(updateCourse(courseData.id, courseData));
     closeModal();
   };
 
-  useEffect(()=>{
-    dispatch(fetchTeacher())
-    dispatch(fetchCategory())
-  },[])
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleEditSubmit}
         className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-full"
       >
-        <h2 className="text-lg font-bold mb-4 text-center">Add Course</h2>
+        <h2 className="text-lg font-bold mb-4 text-center">Edit Course</h2>
 
         <input
           type="text"
           name="courseName"
           placeholder="Course Name"
           value={courseData.courseName}
-          onChange={handleChange}
+          onChange={handleEditChange}
           className="border border-gray-300 p-2 w-full mb-3 rounded"
           required
         />
@@ -69,7 +52,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
           name="coursePrice"
           placeholder="Course Price"
           value={courseData.coursePrice}
-          onChange={handleChange}
+          onChange={handleEditChange}
           className="border border-gray-300 p-2 w-full mb-3 rounded"
         />
 
@@ -78,7 +61,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
           name="courseDuration"
           placeholder="Course Duration"
           value={courseData.courseDuration}
-          onChange={handleChange}
+          onChange={handleEditChange}
           className="border border-gray-300 p-2 w-full mb-3 rounded"
         />
 
@@ -87,14 +70,14 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
           name="courseDescription"
           placeholder="Course Description"
           value={courseData.courseDescription}
-          onChange={handleChange}
+          onChange={handleEditChange}
           className="border border-gray-300 p-2 w-full mb-3 rounded"
         />
 
         <select
   name="courseLevel"
   value={courseData.courseLevel}
-  onChange={handleChange}
+  onChange={handleEditChange}
   className="border border-gray-300 p-2 w-full mb-3 rounded"
   required
 >
@@ -107,7 +90,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
 <select
   name="categoryId"
   value={courseData.categoryId}
-  onChange={handleChange}
+  onChange={handleEditChange}
   className="border border-gray-300 p-2 w-full mb-3 rounded"
   required
 >
@@ -123,7 +106,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
         <select
   name="teacherId"
   value={courseData.teacherId}
-  onChange={handleChange}
+  onChange={handleEditChange}
   className="border border-gray-300 p-2 w-full mb-3 rounded"
   required
 >
@@ -156,4 +139,4 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
   );
 };
 
-export default CourseAddModal;
+export default CourseEditModal;
