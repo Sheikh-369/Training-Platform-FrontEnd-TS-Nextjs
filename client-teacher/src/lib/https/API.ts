@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API=axios.create({
+const teacherAPI=axios.create({
     baseURL:"http://localhost:7900/teaching/",
     headers:{
         "Content-Type":"application/json",
@@ -8,4 +8,4 @@ const API=axios.create({
     }
 })
 
-export default API
+export default teacherAPI
