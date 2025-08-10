@@ -1,12 +1,13 @@
 import { Status } from "@/lib/global/types"
 
 export interface IAuthLoginData{
-    instituteNumber:number,
+    instituteNumber:string | number,
     teacherEmail:string,
-    teacherPassword:string
+    teacherPassword:string,
+    token:string
 }
 
 export interface IInitialAuthData{
-    authData:IAuthLoginData[],
+    authData:IAuthLoginData,
     status:Status
 }

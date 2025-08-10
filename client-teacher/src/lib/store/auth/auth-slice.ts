@@ -5,7 +5,12 @@ import { AppDispatch } from "../store";
 import teacherAPI from "@/lib/https/API";
 
 const initialState:IInitialAuthData={
-    authData:[],
+    authData:{
+        teacherEmail:"",
+        teacherPassword:"",
+        instituteNumber:"",
+        token:""
+    },
     status:Status.LOADING
 }
 
@@ -13,7 +18,7 @@ const authSlice=createSlice({
     name:"auth",
     initialState,
     reducers:{
-        setAuthData(state:IInitialAuthData,action:PayloadAction<IAuthLoginData[]>){
+        setAuthData(state:IInitialAuthData,action:PayloadAction<IAuthLoginData>){
             state.authData=action.payload
         },
 
@@ -27,7 +32,7 @@ const {setAuthData,setStatus}=authSlice.actions
 export default authSlice.reducer
 
 
-/*API s INTEGRATION */
+/*teacher login*/
 export function teacherLogin(data:IAuthLoginData){
     return async function teacherLoginThunk(dispatch:AppDispatch){
         try {
@@ -35,6 +40,7 @@ export function teacherLogin(data:IAuthLoginData){
             if(response.status === 201){
                 dispatch(setStatus(Status.SUCCESS))
                 response.data.data && dispatch(setAuthData(response.data.data))
+                localStorage.setItem("token",response.data.data.token)
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
