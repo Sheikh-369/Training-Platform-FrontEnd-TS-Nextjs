@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAuthData, IInitialAuthData } from "./auth-slice-types";
+import { IAuthLoginData, IInitialAuthData } from "./auth-slice-types";
 import { Status } from "@/lib/global/types";
+import { AppDispatch } from "../store";
+import teacherAPI from "@/lib/https/API";
 
 const initialState:IInitialAuthData={
-    auth:[],
+    authData:[],
     status:Status.LOADING
 }
 
@@ -11,8 +13,8 @@ const authSlice=createSlice({
     name:"auth",
     initialState,
     reducers:{
-        setAuth(state:IInitialAuthData,action:PayloadAction<IAuthData[]>){
-            state.auth=action.payload
+        setAuthData(state:IInitialAuthData,action:PayloadAction<IAuthLoginData[]>){
+            state.authData=action.payload
         },
 
         setStatus(state:IInitialAuthData,action:PayloadAction<Status>){
@@ -21,8 +23,24 @@ const authSlice=createSlice({
     }
 })
 
-const {setAuth,setStatus}=authSlice.actions
+const {setAuthData,setStatus}=authSlice.actions
 export default authSlice.reducer
 
 
-// export function
+/*API s INTEGRATION */
+export function teacherLogin(data:IAuthLoginData){
+    return async function teacherLoginThunk(dispatch:AppDispatch){
+        try {
+            const response  =await teacherAPI.post('institute/teacher/login',data)
+            if(response.status === 201){
+                dispatch(setStatus(Status.SUCCESS))
+                response.data.data && dispatch(setAuthData(response.data.data))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+                dispatch(setStatus(Status.ERROR))
+            
+        }
+    }
+}
