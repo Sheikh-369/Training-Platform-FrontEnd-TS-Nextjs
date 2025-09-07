@@ -4,6 +4,7 @@ import { IUserLoginData } from "./loginTypes"
 import { useAppDispatch } from "@/lib/store/hooks"
 import { loginUser } from "@/lib/store/auth/authSlice"
 import { Status } from "@/lib/GlobalTypes/type"
+import Link from "next/link"
 
 const UserLogin=()=>{
   const dispatch=useAppDispatch()
@@ -57,12 +58,12 @@ const UserLogin=()=>{
           className="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 ring-indigo-600"
           required
         />
-        <a
-          href="#"
+        <Link
+          href="/auth/forgot-password"
           className="text-sm font-thin text-gray-800 hover:underline mt-2 inline-block hover:text-indigo-600"
         >
           Forgot Password?
-        </a>
+        </Link>
       </div>
 
       {/* Submit Button */}
@@ -73,8 +74,17 @@ const UserLogin=()=>{
         Login
       </button>
     </form>
+
+    {/* Don't have an account? Sign Up */}
+    <p className="mt-6 text-center text-sm text-gray-600">
+      Don’t have an account?{" "}
+      <Link href="/auth/register" className="text-indigo-600 hover:underline font-medium">
+        Sign Up
+      </Link>
+    </p>
   </div>
-            </div>
+</div>
+
         </>
     )
 }

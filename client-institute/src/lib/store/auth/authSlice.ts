@@ -5,14 +5,12 @@ import API from "@/lib/http/OnlyAPI";
 import { AppDispatch } from "../store";
 import { IUserLoginData } from "@/app/auth/login/loginTypes";
 import { IRegisterUserData } from "@/app/auth/register/registerTypes";
+import { IForgotPasswordData } from "@/app/auth/forgot-password/page";
+import { IResetPasswordData } from "@/app/auth/reset-password/page";
 
 const initialState:IInitialState={
-    user:{
-        userName:"",
-        userEmail:"",
-        token:""
-    },
-    status:Status.LOADING
+    user:null,
+    status:Status.IDLE
 }
 
 const authSlice=createSlice({
@@ -25,13 +23,17 @@ const authSlice=createSlice({
 
         setStatus(state:IInitialState,action:PayloadAction<Status>){
             state.status=action.payload
+        },
+        //used in redirecting after success or error
+        resetStatus(state: IInitialState) {
+            state.status = Status.IDLE;
         }
     }
 })
 
-const {setUser,setStatus}=authSlice.actions
+const {setUser,setStatus,resetStatus}=authSlice.actions
 export default authSlice.reducer
-export {setUser,setStatus}
+export {setUser,setStatus,resetStatus}
 
 export function registerUser(data:IRegisterUserData){
     return async function userRegisterThunk(dispatch:AppDispatch){
@@ -41,6 +43,7 @@ export function registerUser(data:IRegisterUserData){
             if(response.status===201){
                 //code if works fine
                 dispatch(setStatus(Status.SUCCESS))
+                alert(response.data.message);
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
@@ -62,6 +65,46 @@ export function loginUser(data:IUserLoginData){
                 dispatch(setUser(response.data.data))
                 localStorage.setItem("token",response.data.data.token)
                 dispatch(setStatus(Status.SUCCESS))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}
+
+export function forgotPassword(emailData:IForgotPasswordData){
+    return async function forgotPasswordThunk(dispatch:AppDispatch){
+        try {
+            const response=await API.post("auth/forgot-password",emailData)
+            console.log(response)
+            if(response.status===200){
+                //code if works fine
+                // dispatch(setUser(response.data.data))
+                dispatch(setStatus(Status.SUCCESS))
+                alert(response.data.message);
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}
+
+export function resetPassword(resetData:IResetPasswordData){
+    return async function resetPasswordThunk(dispatch:AppDispatch){
+        try {
+            const response=await API.post("auth/reset-password",resetData)
+            console.log(response)
+            if(response.status===200){
+                //code if works fine
+                // dispatch(setUser(response.data.data))
+                dispatch(setStatus(Status.SUCCESS))
+                alert(response.data.message);
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
