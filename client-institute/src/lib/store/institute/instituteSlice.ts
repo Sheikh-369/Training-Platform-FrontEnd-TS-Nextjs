@@ -13,7 +13,7 @@ const initialState:IInitialInstitute={
         institutePanNumber:"",
         instituteVatNumber:""
     },
-    status:Status.LOADING
+    status:Status.IDLE
 }
 const instituteSlice=createSlice({
     name:"institute",
@@ -24,11 +24,15 @@ const instituteSlice=createSlice({
         },
         setStatus(state:IInitialInstitute,action:PayloadAction<Status>){
             state.status=action.payload
+        },
+
+        resetStatus(state: IInitialInstitute) {
+            state.status = Status.IDLE;
         }
     }
 })
 
-const {setInstitute,setStatus}=instituteSlice.actions
+export const {setInstitute,setStatus,resetStatus}=instituteSlice.actions
 export default instituteSlice.reducer
 
 export function createInstitute(data:IInstituteData){

@@ -7,7 +7,7 @@ export interface IAuthLoginData{
     token:string
 }
 
-export interface IInitialAuthData{
+export interface ITeacherAuthSliceState{
     authData:IAuthLoginData,
     status:Status
 }

@@ -12,3 +12,27 @@ const APIWITHTOKEN = axios.create({
 
 
 export default APIWITHTOKEN
+
+// // lib/http/APIWITHTOKEN.ts
+// import axios from "axios";
+
+// const APIWITHTOKEN = axios.create({
+//   baseURL: "http://localhost:7900/teaching/",
+//   headers: {
+//     "Content-Type": "application/json",
+//     "Accept": "application/json",
+//   },
+// });
+
+// // ✅ Add Authorization dynamically with Bearer prefix
+// APIWITHTOKEN.interceptors.request.use((config) => {
+//   if (typeof window !== "undefined") {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//   }
+//   return config;
+// });
+
+// export default APIWITHTOKEN;

@@ -1,10 +1,15 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IInstituteData } from "./instituteTypes";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { createInstitute } from "@/lib/store/institute/instituteSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { createInstitute, resetStatus } from "@/lib/store/institute/instituteSlice";
+import { useRouter } from "next/navigation";
+import { Status } from "@/lib/GlobalTypes/type";
 
 const Institute = () => {
+  const router = useRouter();  
+  const status = useAppSelector(store => store.institute.status)
+
   const dispatch=useAppDispatch()
   const [instituteData, setInstituteData] = useState<IInstituteData>({
     instituteName: "",
@@ -32,6 +37,13 @@ const Institute = () => {
     console.log("Submitted Institute Data:", instituteData);
     // You can add form submission logic here (e.g., API call)
   };
+
+  useEffect(() => {
+  if (status === Status.SUCCESS) {
+    // ✅ Redirects towards login page after success    
+    router.push('/institute/dashboard/course'); // or "/dashboard" if auto-login
+    dispatch(resetStatus()); // clear SUCCESS status after redirect
+  }}, [status,router,dispatch]);
 
   return (
     <div

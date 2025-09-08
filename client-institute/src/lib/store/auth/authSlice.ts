@@ -54,7 +54,6 @@ export function registerUser(data:IRegisterUserData){
     }
 }
 
-
 export function loginUser(data:IUserLoginData){
     return async function userLoginThunk(dispatch:AppDispatch){
         try {
