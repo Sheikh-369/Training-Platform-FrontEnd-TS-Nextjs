@@ -28,6 +28,7 @@ export default teacherSlice.reducer
 //fetch teachers
 export function fetchTeacher(){
     return async function fetchTeacherThunk(dispatch:AppDispatch) {
+        dispatch(setStatus(Status.LOADING));
        try {
         const response=await APIWITHTOKEN.get("institute/teacher")
        if(response.status===200){

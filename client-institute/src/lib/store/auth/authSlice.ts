@@ -9,7 +9,11 @@ import { IForgotPasswordData } from "@/app/auth/forgot-password/page";
 import { IResetPasswordData } from "@/app/auth/reset-password/page";
 
 const initialState:IInitialState={
-    user:null,
+    user:{
+        userName:"",
+        userEmail:"",
+        token:""
+    },
     status:Status.IDLE
 }
 
@@ -31,9 +35,8 @@ const authSlice=createSlice({
     }
 })
 
-const {setUser,setStatus,resetStatus}=authSlice.actions
+export const {setUser,setStatus,resetStatus}=authSlice.actions
 export default authSlice.reducer
-export {setUser,setStatus,resetStatus}
 
 export function registerUser(data:IRegisterUserData){
     return async function userRegisterThunk(dispatch:AppDispatch){
