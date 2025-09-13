@@ -1,4 +1,3 @@
-
 import axios from "axios"
 
 const APIWITHTOKEN = axios.create({
@@ -9,7 +8,6 @@ const APIWITHTOKEN = axios.create({
         "Accept" : "application/json" // receive huda kasto type ko format ko receive garne 
     }
 })
-
 
 export default APIWITHTOKEN
 

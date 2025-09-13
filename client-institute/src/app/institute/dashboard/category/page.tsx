@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import CategoryEditModal from "./editCategoryModal"
 
 function InstituteCategory(){
-  //addCategoryLogic
+  //ModalLogic
   const [isModalOpen,setIsModalOpen]=useState<boolean>(false)
   const openModal=()=>setIsModalOpen(true)
   const closeModal=()=>setIsModalOpen(false)
