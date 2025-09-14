@@ -1,4 +1,4 @@
-import TeacherDashboard from "@/app/dashboard/dashboard";
+import TeacherDashboard from "@/app/component/dashboard/dashboard";
 
 function TeacherDashboardLayout({children,}: Readonly<{children: React.ReactNode;}>){
     return(

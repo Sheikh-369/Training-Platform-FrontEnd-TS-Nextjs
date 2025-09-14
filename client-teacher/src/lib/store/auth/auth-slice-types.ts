@@ -4,7 +4,9 @@ export interface IAuthLoginData{
     instituteNumber:string | number,
     teacherEmail:string,
     teacherPassword:string,
-    token:string
+    token:string,
+    id:string | number,
+    teacherId?:string | number
 }
 
 export interface ITeacherAuthSliceState{

@@ -41,12 +41,18 @@ const Teacher=()=>{
     console.log("Raw payload:", teacherLoginData);
     }
 
-    useEffect(() => {
-  if (status === Status.SUCCESS) {
-    // ✅ Redirects towards login page after success    
-    router.push("/teacher/dashboard/personal-details"); // or "/dashboard" if auto-login
-    dispatch(resetStatus()); // clear SUCCESS status after redirect
-  }}, [status,router,dispatch]);
+//backend bata single teacher ko id tanne tarika
+const authData = useAppSelector(store => store.auth.authData);
+
+useEffect(() => {
+  if (status === Status.SUCCESS && authData?.teacherId) {
+    router.push(`/teacher/dashboard/${authData.teacherId}`);
+    dispatch(resetStatus());
+  }
+}, [status, authData, router, dispatch]);
+
+
+
     return(
         <>
         <div className="flex items-center justify-center min-h-screen bg-gray-100">

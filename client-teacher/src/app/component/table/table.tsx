@@ -1,6 +1,4 @@
-const TeacherStudent=()=>{
-    return(
-        <div className="w-full flex items-center justify-center min-h-full p-2">
+<div className="w-full bg-black flex items-center justify-center min-h-full p-2">
   <div className="container max-w-6xl">
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       {/* Table Header */}
@@ -139,7 +137,3 @@ const TeacherStudent=()=>{
     </div>
   </div>
 </div>
-
-    )
-}
-export default TeacherStudent
