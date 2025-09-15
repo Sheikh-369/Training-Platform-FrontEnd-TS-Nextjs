@@ -16,7 +16,8 @@ const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
     teacherExpertise:"",
     teacherJoinDate:"",
     teacherSalary:"",
-    teacherImage:null  //1
+    teacherImage:null ,
+    teacherAddress:""
     })
 
     const dispatch=useAppDispatch()
@@ -64,6 +65,13 @@ const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
         <div>
           <label htmlFor="teacherEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
           <input onChange={handleTeacherDataChange} name="teacherEmail" id="teacherEmail" type="email" placeholder="malik@gmail.com"
+            className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
+            required />
+        </div>
+        {/* Address */}
+        <div>
+          <label htmlFor="teacherAddress" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
+          <input onChange={handleTeacherDataChange} name="teacherAddress" id="teacherAddress" type="text" placeholder="123 Main St"
             className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
             required />
         </div>

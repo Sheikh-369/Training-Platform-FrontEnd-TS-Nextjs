@@ -1,5 +1,6 @@
 'use client';
 
+import { useAppSelector } from "@/lib/store/hooks";
 import Link from "next/link";
 
 function TeacherDashboard({
@@ -7,7 +8,7 @@ function TeacherDashboard({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
+  const teacherId = useAppSelector(state => state.teacher.teacher?.id);
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -28,7 +29,7 @@ function TeacherDashboard({
         <nav className="mt-5 px-2 flex-1">
           {/* Dashboard Link */}
           <Link
-            href={`/teacher/dashboard`}
+            href={`/teacher/dashboard/${teacherId}`}
             className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-slate-700 text-white hover:bg-slate-600"
           >
             {/* SVG omitted for brevity */}
@@ -37,7 +38,7 @@ function TeacherDashboard({
 
           {/* Student Link */}
           <Link
-            href="/teacher/dashboard/student"
+            href={`/teacher/dashboard/${teacherId}/student`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-white hover:bg-slate-700 hover:text-white"
           >
             Student
@@ -52,13 +53,13 @@ function TeacherDashboard({
             {/* Nested Sub-links */}
             <div className="ml-10 mt-1 space-y-1">
               <Link
-                href="/teacher/dashboard/course/chapter"
+                href={`/teacher/dashboard/${teacherId}/course/chapter`}
                 className="block text-sm text-white hover:text-slate-300"
               >
                 Chapter
               </Link>
               <Link
-                href="/teacher/dashboard/course/lesson"
+                href={`/teacher/dashboard/${teacherId}/course/lesson`}
                 className="block text-sm text-white hover:text-slate-300"
               >
                 Lesson

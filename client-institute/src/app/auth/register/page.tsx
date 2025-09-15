@@ -1,9 +1,11 @@
 'use client'
-import { ChangeEvent, FormEvent,useState } from "react";
+import { ChangeEvent, FormEvent,useEffect,useState } from "react";
 import { IRegisterUserData } from "./registerTypes";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { registerUser } from "@/lib/store/auth/authSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Status } from "@/lib/GlobalTypes/type";
 
 
 const UserRegister = () => {
@@ -27,6 +29,17 @@ const UserRegister = () => {
     dispatch(registerUser(data))
     alert("User Registered Successfully!")
   }
+
+  //login ma redirect garne
+  const router = useRouter();  
+  const status = useAppSelector(store => store.auth.status)
+
+  useEffect(() => {
+  if (status === Status.SUCCESS) {
+    router.push(`/auth/login`);
+  }
+}, [status, router]);
+
   return (
     <>
       <div className="min-h-screen bg-gradient-to-r from-sky-100 to-indigo-100 flex items-center justify-center px-4">
@@ -114,8 +127,7 @@ const UserRegister = () => {
       </p>
     </div>
   </div>
-</div>
-
+      </div>
     </>
   );
 };

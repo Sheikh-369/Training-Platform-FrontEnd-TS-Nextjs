@@ -7,7 +7,9 @@ export interface ITeacherDataModal{
     teacherExpertise:string,
     teacherJoinDate:string,
     teacherSalary:string,
-    teacherImage:File |string | null //3
+    teacherImage:File |string | null //3,
+    teacherAddress?:string,
+    teacherInstituteName?:string
 }
 
 export interface ITeacherData extends ITeacherDataModal{

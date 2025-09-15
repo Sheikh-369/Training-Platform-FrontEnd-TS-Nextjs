@@ -10,6 +10,7 @@ export interface ITeacher {
     teacherImage: string;
     teacherAddress: string;
     teacherInstituteName: string;
+    aboutTeacher?: string;
 }
 
 export interface ITeacherSliceState {
