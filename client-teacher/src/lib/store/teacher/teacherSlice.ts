@@ -54,20 +54,63 @@ export function fetchTeacherData(id: string) {
 }
 
 //edit teacher data by id
+// export function editTeacherData(id: string, teacherData: ITeacher) {
+//   return async function editTeacherDataThunk(dispatch: AppDispatch) {
+//     dispatch(setStatus(Status.LOADING));
+//     try {
+//       const response = await APIWITHTOKEN.patch('institute/teacher/' + id, teacherData);
+//       if (response.status === 200) {
+//         dispatch(setStatus(Status.SUCCESS));
+//         dispatch(fetchTeacherData(id)); // Refetch the updated teacher data
+//       } else {
+//         dispatch(setStatus(Status.ERROR));
+//       }
+//     } catch (error) {
+//       console.error("Error editing teacher:", error);
+//       dispatch(setStatus(Status.ERROR));
+//     }
+//   }
+// }
+
 export function editTeacherData(id: string, teacherData: ITeacher) {
   return async function editTeacherDataThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
+
     try {
-      const response = await APIWITHTOKEN.patch('institute/teacher/' + id, teacherData);
+      const formData = new FormData();
+
+      // Loop through each field in teacherData
+      Object.entries(teacherData).forEach(([key, value]) => {
+        if (key === "teacherImage") {
+          if (value instanceof File) {
+            formData.append("teacherImage", value); // new file
+          } else if (typeof value === "string") {
+            formData.append("teacherImage", value); // existing image path
+          }
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, value as string); // append other fields
+        }
+      });
+
+      const response = await APIWITHTOKEN.patch(
+        `institute/teacher/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
-        dispatch(fetchTeacherData(id)); // Refetch the updated teacher data
+        dispatch(fetchTeacherData(id)); // Refresh the updated teacher
       } else {
         dispatch(setStatus(Status.ERROR));
       }
     } catch (error) {
-      console.error("Error editing teacher:", error);
+      console.error("Error updating teacher:", error);
       dispatch(setStatus(Status.ERROR));
     }
-  }
+  };
 }
