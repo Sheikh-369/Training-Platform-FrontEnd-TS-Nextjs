@@ -25,8 +25,10 @@ const teacherSlice = createSlice({
 export const { setTeacher, setStatus } = teacherSlice.actions;
 export default teacherSlice.reducer;
 
+//fetch single teacher data by id
 export function fetchTeacherData(id: string) {
   return async function fetchTeacherDataThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
     try {
       const response = await APIWITHTOKEN.get('institute/teacher/' + id);
 
@@ -46,6 +48,25 @@ export function fetchTeacherData(id: string) {
       }
     } catch (error) {
       console.error("Error fetching teacher:", error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  }
+}
+
+//edit teacher data by id
+export function editTeacherData(id: string, teacherData: ITeacher) {
+  return async function editTeacherDataThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await APIWITHTOKEN.patch('institute/teacher/' + id, teacherData);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchTeacherData(id)); // Refetch the updated teacher data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error("Error editing teacher:", error);
       dispatch(setStatus(Status.ERROR));
     }
   }
