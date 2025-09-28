@@ -45,6 +45,7 @@ const Teacher=()=>{
 const authData = useAppSelector(store => store.auth.authData);
 
 useEffect(() => {
+  console.log("AuthData:", authData);
   if (status === Status.SUCCESS && authData?.teacherId) {
     router.push(`/teacher/dashboard/${authData.teacherId}`);
     dispatch(resetStatus());

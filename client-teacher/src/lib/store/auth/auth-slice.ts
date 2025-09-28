@@ -11,7 +11,8 @@ const initialState:ITeacherAuthSliceState={
         teacherPassword:"",
         instituteNumber:"",
         token:"",
-        id:""
+        id:"",
+        teacherId:0
     },
     status:Status.IDLE
 }

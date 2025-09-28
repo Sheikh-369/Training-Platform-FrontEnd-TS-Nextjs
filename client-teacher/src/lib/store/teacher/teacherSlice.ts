@@ -1,12 +1,11 @@
 import { Status } from "@/lib/global/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ITeacher, ITeacherSliceState } from "./teacherSliceType";
-import App from "next/app";
 import { AppDispatch } from "../store";
 import APIWITHTOKEN from "@/lib/https/APIWithToken";
 const initialState: ITeacherSliceState = {
     teacher:null,
-    status: Status.IDLE // or use an enum for better type safety
+    status: Status.IDLE 
 }
 const teacherSlice = createSlice({
     name: "teacher",
@@ -35,7 +34,7 @@ export function fetchTeacherData(id: string) {
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
 
-        // ✅ Extract first teacher from array
+        // Extracting first teacher from array
         const teacher = response.data.data[0];
         if (teacher) {
           dispatch(setTeacher(teacher));
