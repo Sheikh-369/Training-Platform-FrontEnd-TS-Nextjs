@@ -78,7 +78,7 @@ const InstituteTeacherModal:React.FC<ICloseModal>=({closeModal})=>{
         {/* teacher Image */}
         <div>
           <label htmlFor="teacherEmail" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Teacher Image</label>
-          <input onChange={handleTeacherDataChange} name="teacherImage" id="teacherEmail" type="file" placeholder="malik@gmail.com"
+          <input onChange={handleTeacherDataChange} name="teacherImage" id="teacherEmail" type="file" placeholder="file.."
             className="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
             required />
         </div>

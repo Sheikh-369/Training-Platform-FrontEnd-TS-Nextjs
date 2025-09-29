@@ -18,6 +18,7 @@ const Institute = () => {
     instituteAddress: "",
     institutePanNumber: "",
     instituteVatNumber: "",
+    instituteImage:null
   });
 
   const [idType, setIdType] = useState(""); // Track PAN/VAT selection
@@ -26,7 +27,8 @@ const Institute = () => {
     const { name, value } = e.target;
     setInstituteData((prev) => ({
       ...prev,
-      [name]: value,
+    //@ts-ignore
+      [name]:name === "instituteImage" ? e.target.files[0] : value 
     }));
   };
 
@@ -73,6 +75,21 @@ const Institute = () => {
           className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
       </div>
+
+      {/* Institute Image */}
+<div>
+  <label htmlFor="instituteImage" className="block text-sm font-medium text-gray-700 mb-1">
+    Institute Image
+  </label>
+  <input
+    id="instituteImage"
+    name="instituteImage"
+    type="file"
+    onChange={handleInstituteDataChange}
+    className="w-full"
+  />
+</div>
+
 
       {/* Email */}
       <div>

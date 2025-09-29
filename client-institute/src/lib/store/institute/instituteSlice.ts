@@ -11,7 +11,8 @@ const initialState:IInitialInstitute={
         institutePhoneNumber:"",
         instituteAddress:"",
         institutePanNumber:"",
-        instituteVatNumber:""
+        instituteVatNumber:"",
+        instituteImage:""
     },
     status:Status.IDLE
 }
