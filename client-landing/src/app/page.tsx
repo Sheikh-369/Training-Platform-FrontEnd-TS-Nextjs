@@ -1,8 +1,9 @@
 'use client'
 
 import { Status } from "@/lib/global-types/type";
-import { homePage } from "@/lib/store/home-slice";
+import { homePage } from "@/lib/store/home/home-slice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import Link from "next/link";
 import React, { useEffect } from "react";
 
 const HomePage = () => {
@@ -29,6 +30,9 @@ const HomePage = () => {
           <p>No institutes found.</p>
         ) : (
           institute.map(({ instituteNumber, instituteName, instituteAddress, institutePhoneNumber, instituteImage }) => (
+            <Link key={instituteNumber}
+                href={`/institutes/${instituteNumber}/courses`}
+                passHref>
             <div
               key={instituteNumber}  // use instituteNumber as unique key
               className="border rounded shadow hover:shadow-lg p-4 flex flex-col items-center"
@@ -42,6 +46,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-1">{instituteAddress}</p>
               <p className="text-gray-600">📞 {institutePhoneNumber}</p>
             </div>
+            </Link>
           ))
         )}
       </div>

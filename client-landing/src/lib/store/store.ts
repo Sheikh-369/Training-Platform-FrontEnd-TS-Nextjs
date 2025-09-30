@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import homeSlice from "./home-slice"
-
+import homeSlice from "../store/home/home-slice"
+import instituteCourseSlice from "../store/institute-course/institute-course"
 
 const store=configureStore({
     reducer:{
-        home:homeSlice
+        home:homeSlice,
+        course:instituteCourseSlice
     }
 })
 
