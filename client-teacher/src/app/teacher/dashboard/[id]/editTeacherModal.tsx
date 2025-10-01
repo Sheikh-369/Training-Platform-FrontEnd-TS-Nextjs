@@ -1,3 +1,4 @@
+'use client'
 import { useAppDispatch } from "@/lib/store/hooks";
 import { editTeacherData } from "@/lib/store/teacher/teacherSlice";
 import { ITeacher } from "@/lib/store/teacher/teacherSliceType";
@@ -7,12 +8,14 @@ interface IEditTeacherModalProps {
   teacher: ITeacher;
   closeModal: () => void;
   teacherId: string;
+  instituteNumber: string; // ✅ New prop added
 }
 
 export const EditTeacherModal = ({
   teacher,
   closeModal,
   teacherId,
+  instituteNumber, // ✅ Destructure it
 }: IEditTeacherModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -50,7 +53,9 @@ export const EditTeacherModal = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(editTeacherData(teacherId, editedTeacher));
+
+    // ✅ Call the updated thunk with all 3 arguments
+    dispatch(editTeacherData(teacherId, instituteNumber, editedTeacher));
     closeModal();
   };
 
@@ -133,24 +138,24 @@ export const EditTeacherModal = ({
           </div>
 
           {/* Profile Image Upload */}
-            <div className="mb-2">
-          <label className="block text-sm font-medium mb-1">Teacher Image</label>
-          <input
-            name="teacherImage"
-            type="file"
-            accept="image/*"
-            onChange={handleInputChange}
-            className="block w-full p-2 border rounded"
-          />
-          {typeof editedTeacher.teacherImage === "string" && editedTeacher.teacherImage && (
-            <img
-              src={editedTeacher.teacherImage as string}
-              alt="Current"
-              className="w-20 h-20 mt-2 object-cover rounded"
+          <div className="mb-2">
+            <label className="block text-sm font-medium mb-1">Teacher Image</label>
+            <input
+              name="teacherImage"
+              type="file"
+              accept="image/*"
+              onChange={handleInputChange}
+              className="block w-full p-2 border rounded"
             />
-          )}
-        </div>
-
+            {typeof editedTeacher.teacherImage === "string" &&
+              editedTeacher.teacherImage && (
+                <img
+                  src={editedTeacher.teacherImage}
+                  alt="Current"
+                  className="w-20 h-20 mt-2 object-cover rounded"
+                />
+              )}
+          </div>
 
           {/* Buttons */}
           <div className="flex justify-end gap-2 mt-6">

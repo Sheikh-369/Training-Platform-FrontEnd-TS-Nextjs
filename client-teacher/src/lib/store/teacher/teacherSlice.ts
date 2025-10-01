@@ -24,17 +24,18 @@ const teacherSlice = createSlice({
 export const { setTeacher, setStatus } = teacherSlice.actions;
 export default teacherSlice.reducer;
 
-//fetch single teacher data by id
-export function fetchTeacherData(id: string) {
+
+export function fetchTeacherData(id: string, instituteNumber: string) {
   return async function fetchTeacherDataThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await APIWITHTOKEN.get('institute/teacher/' + id);
+      const response = await APIWITHTOKEN.get(
+        `institute/teacher/${instituteNumber}/${id}`
+      );
 
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
 
-        // Extracting first teacher from array
         const teacher = response.data.data[0];
         if (teacher) {
           dispatch(setTeacher(teacher));
@@ -49,50 +50,39 @@ export function fetchTeacherData(id: string) {
       console.error("Error fetching teacher:", error);
       dispatch(setStatus(Status.ERROR));
     }
-  }
+  };
 }
 
-//edit teacher data by id
-// export function editTeacherData(id: string, teacherData: ITeacher) {
-//   return async function editTeacherDataThunk(dispatch: AppDispatch) {
-//     dispatch(setStatus(Status.LOADING));
-//     try {
-//       const response = await APIWITHTOKEN.patch('institute/teacher/' + id, teacherData);
-//       if (response.status === 200) {
-//         dispatch(setStatus(Status.SUCCESS));
-//         dispatch(fetchTeacherData(id)); // Refetch the updated teacher data
-//       } else {
-//         dispatch(setStatus(Status.ERROR));
-//       }
-//     } catch (error) {
-//       console.error("Error editing teacher:", error);
-//       dispatch(setStatus(Status.ERROR));
-//     }
-//   }
-// }
 
-export function editTeacherData(id: string, teacherData: ITeacher) {
+
+
+export function editTeacherData(
+  id: string,
+  instituteNumber: string,
+  teacherData: ITeacher
+) {
   return async function editTeacherDataThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
 
     try {
       const formData = new FormData();
 
-      // Loop through each field in teacherData
+      // Append all teacher fields to formData
       Object.entries(teacherData).forEach(([key, value]) => {
         if (key === "teacherImage") {
           if (value instanceof File) {
-            formData.append("teacherImage", value); // new file
+            formData.append("teacherImage", value); // New file
           } else if (typeof value === "string") {
-            formData.append("teacherImage", value); // existing image path
+            formData.append("teacherImage", value); // Existing image path
           }
         } else if (value !== null && value !== undefined) {
-          formData.append(key, value as string); // append other fields
+          formData.append(key, value as string); // Other fields
         }
       });
 
+      // 🛠 PATCH request with correct URL
       const response = await APIWITHTOKEN.patch(
-        `institute/teacher/${id}`,
+        `institute/teacher/${instituteNumber}/${id}`,
         formData,
         {
           headers: {
@@ -103,7 +93,8 @@ export function editTeacherData(id: string, teacherData: ITeacher) {
 
       if (response.status === 200) {
         dispatch(setStatus(Status.SUCCESS));
-        dispatch(fetchTeacherData(id)); // Refresh the updated teacher
+        // Refresh the updated teacher data
+        dispatch(fetchTeacherData(id, instituteNumber));
       } else {
         dispatch(setStatus(Status.ERROR));
       }
@@ -113,3 +104,4 @@ export function editTeacherData(id: string, teacherData: ITeacher) {
     }
   };
 }
+
