@@ -14,6 +14,7 @@ const CourseAddModal: React.FC<ICloseModal> = ({ closeModal}) => {
   const dispatch = useAppDispatch();
   const {data:categories}=useAppSelector((store)=>store.category)
   const {teacher:teachers}=useAppSelector((store)=>store.teacher)
+  
   const [courseData, setCourseData] = useState<ICourseData>({
     id: "",
     courseName: "",
