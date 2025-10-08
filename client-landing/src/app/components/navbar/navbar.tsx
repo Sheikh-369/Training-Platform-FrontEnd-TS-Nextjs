@@ -3,7 +3,7 @@ import { logoutUser } from "@/lib/store/auth/auth-slice";
 import { useAppDispatch, useAuth } from "@/lib/store/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaBars, FaTimes, FaGraduationCap, FaSearch } from "react-icons/fa";
 interface NavbarProps {
@@ -13,6 +13,7 @@ interface NavbarProps {
 const Navbar = ({ onSearchChange }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  
   //logout logic
   const dispatch=useAppDispatch()
   const router=useRouter()
@@ -23,6 +24,16 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
     toast.success("Logged out successfully");
     router.push("/");
   };
+  //restricting user from creating institute without login
+    const handleCreateInstituteClick = () => {
+    if (!user) {
+      toast.error('You must be logged in to register an institute.');
+      router.push('/auth/global/login');
+      return;
+    }
+
+    router.push('/auth/register-institute');
+  };
 
   //search logic
   const [searchInput, setSearchInput] = useState("");
@@ -32,6 +43,7 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
     setSearchInput(value);
     if (onSearchChange) onSearchChange(value);
   };
+
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
@@ -95,11 +107,11 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
               </Link>
             )}
 
-            <Link href="/register-institute">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-medium">
+            
+              <button onClick={handleCreateInstituteClick} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-medium">
                 Register Your Institute
               </button>
-            </Link>
+        
           </div>
 
           {/* Mobile: Hamburger */}
@@ -144,11 +156,11 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
               />
             </div>
 
-            <Link href="/register-institute" className="mt-3">
-              <button className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            
+              <button onClick={handleCreateInstituteClick} className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Register Your Institute
               </button>
-            </Link>
+            
           </div>
         </div>
       )}

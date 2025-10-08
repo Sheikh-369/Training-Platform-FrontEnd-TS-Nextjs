@@ -20,11 +20,17 @@ const instituteCourseSlice=createSlice({
 
         setStatus(state:IInstituteCourseSliceState,action:PayloadAction<Status>){
             state.status=action.payload
-        }
+        },
+
+            // xuta xutai institute page auna ko lagi
+        resetInstituteCourse(state) {
+            state.instituteCourse = [];
+            state.status = Status.IDLE;
+        },
     }
 })
 
-export const {setInstituteCourse,setStatus}=instituteCourseSlice.actions
+export const {setInstituteCourse,setStatus,resetInstituteCourse}=instituteCourseSlice.actions
 export default instituteCourseSlice.reducer
 
 //fetch all courses of an institute

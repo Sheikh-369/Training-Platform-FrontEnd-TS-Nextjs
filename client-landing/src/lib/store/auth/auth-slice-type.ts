@@ -7,7 +7,8 @@ export interface IUserData {
   userPassword?:string,
   token?: string;
   OTP?:string | number,
-  newPassword?:string
+  newPassword?:string,
+  confirmNewPassword?:string
 }
 
 

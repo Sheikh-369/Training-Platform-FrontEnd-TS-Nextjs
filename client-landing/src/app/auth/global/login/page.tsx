@@ -91,41 +91,51 @@ function Login() {
           </div>
 
           <div className="mb-4">
-            <label
-              className="block mb-1 text-sm text-indigo-600 font-semibold"
-              htmlFor="userPassword"
-            >
-              Password
-            </label>
-            <input
-              className="w-full p-1.5 text-sm text-indigo-700 border-b border-indigo-500 outline-none focus:bg-gray-100 transition"
-              type="password"
-              name="userPassword"
-              id="userPassword"
-              value={loginData.userPassword}
-              onChange={handleChange}
-              required
-              placeholder="Enter password"
-            />
-          </div>
+  <label
+    className="block mb-1 text-sm text-indigo-600 font-semibold"
+    htmlFor="userPassword"
+  >
+    Password
+  </label>
+  <input
+    className="w-full p-1.5 text-sm text-indigo-700 border-b border-indigo-500 outline-none focus:bg-gray-100 transition"
+    type="password"
+    name="userPassword"
+    id="userPassword"
+    value={loginData.userPassword}
+    onChange={handleChange}
+    required
+    placeholder="Enter password"
+  />
+</div>
 
-          <input
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-1.5 rounded cursor-pointer transition"
-            type="submit"
-            value="Login"
-          />
+{/* 🔗 Forgot Password link just below password input */}
+<div className="mb-4 text-right">
+  <Link
+    className="text-xs text-indigo-600 hover:text-pink-700 transition"
+    href="/auth/global/forgot-password"
+  >
+    Forgot Password?
+  </Link>
+</div>
+
+<input
+  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-1.5 rounded cursor-pointer transition"
+  type="submit"
+  value="Login"
+/>
+
         </form>
 
         <footer className="flex justify-center text-xs mt-3">
+  <Link
+    className="text-indigo-700 hover:text-pink-700 transition"
+    href="/auth/global/register"
+  >
+    Don't have an account? Sign Up
+  </Link>
+</footer>
 
-          {/* Link to register page */}
-          <Link
-            className="text-indigo-700 hover:text-pink-700 transition"
-            href="/auth/global/register"
-          >
-            Don't have an account? Sign Up
-          </Link>
-        </footer>
       </div>
     </div>
   );

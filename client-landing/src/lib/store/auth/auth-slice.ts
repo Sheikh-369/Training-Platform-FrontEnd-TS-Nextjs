@@ -72,8 +72,8 @@ export function userLogin(userLoginData: IUserData) {
 
         // Save user data & token
         dispatch(setUser(user));
-        localStorage.setItem("token", user.token);
-
+        localStorage.setItem("token", user.token);//user token lai store grx
+        localStorage.setItem("user", JSON.stringify(user));//page refresh grda pani asve grx user lai
         dispatch(setStatus(Status.SUCCESS));
         return {
           success: true,
@@ -100,42 +100,48 @@ export function userLogin(userLoginData: IUserData) {
 }
 
 //user forgot password
-export function forgotPassword(emailData:IUserData){
-    return async function forgotPasswordThunk(dispatch:AppDispatch){
-        dispatch(setStatus(Status.LOADING))
-        try {
-            const response=await API.post("auth/forgot-password",emailData)
-            console.log(response)
-            if(response.status===200){
-                //code if works fine
-                dispatch(setStatus(Status.SUCCESS))
-            }else{
-                dispatch(setStatus(Status.ERROR))
-            }
-        } catch (error) {
-            console.log(error)
-            dispatch(setStatus(Status.ERROR))
-        }
+export function forgotPassword(emailData: IUserData) {
+  return async function forgotPasswordThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await API.post("auth/forgot-password", emailData);
+      console.log(response);
+
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+
+      return response; // <-- return response to the UI
+    } catch (error: any) {
+      console.log(error);
+      dispatch(setStatus(Status.ERROR));
+      throw error; // <-- to catch in UI
     }
+  };
 }
 
 // user rset password
-export function resetPassword(resetData:IUserData){
-    return async function resetPasswordThunk(dispatch:AppDispatch){
-        dispatch(setStatus(Status.LOADING))
-        try {
-            const response=await API.post("auth/reset-password",resetData)
-            console.log(response)
-            if(response.status===200 || response.status===201){
-                //code if works fine
-                dispatch(setStatus(Status.SUCCESS))
-                alert(response.data.message);
-            }else{
-                dispatch(setStatus(Status.ERROR))
-            }
-        } catch (error) {
-            console.log(error)
-            dispatch(setStatus(Status.ERROR))
-        }
+export function resetPassword(resetData: IUserData) {
+  return async function resetPasswordThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await API.post("auth/reset-password", resetData);
+      console.log(response);
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(setStatus(Status.SUCCESS));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+
+      return response; // <-- return this
+    } catch (error) {
+      console.log(error);
+      dispatch(setStatus(Status.ERROR));
+      throw error; // <-- also throw to handle it in the component
     }
+  };
 }
+
