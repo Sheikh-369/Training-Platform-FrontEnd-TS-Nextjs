@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gradient-to-br from-purple-200 via-indigo-300 to-blue-300 text-gray-900 mt-16 py-10">
+    <footer className="w-full  text-gray-900 mt-16 py-10">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo & Description */}
         <div>
@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-indigo-400 text-center py-4 text-sm text-gray-700">
+      <div className=" border-indigo-400 text-center py-4 text-sm text-gray-700">
         © {new Date().getFullYear()} EduPortal. All rights reserved.
       </div>
     </footer>

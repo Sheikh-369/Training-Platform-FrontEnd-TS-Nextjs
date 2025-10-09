@@ -44,7 +44,6 @@
 
 
 'use client';
-
 import './globals.css';
 import { GeistSans, GeistMono } from 'geist/font';
 import type { Metadata } from 'next';

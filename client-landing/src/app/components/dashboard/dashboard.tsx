@@ -1,0 +1,84 @@
+'use client';
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import React from "react";
+
+function Dashboard({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { instituteNumber } = useParams();
+
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-md flex flex-col">
+        <div className="p-4 border-b">
+          <div className="flex items-center">
+            <img
+              src="https://tailwindflex.com/images/logo.svg"
+              alt="Logo"
+              className="h-8 w-auto"
+            />
+            <span className="ml-2 text-xl font-semibold text-gray-800">
+              Dashboard
+            </span>
+          </div>
+        </div>
+        <nav className="mt-5 px-2 flex-1">
+          <Link
+            href={`/owner/${instituteNumber}/dashboard`}
+            className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-indigo-100 text-indigo-700"
+          >
+            🏠 Dashboard
+          </Link>
+          <Link
+            href={`/owner/${instituteNumber}/dashboard/teacher`}
+            className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          >
+            👨‍🏫 Teacher
+          </Link>
+          <Link
+            href={`/owner/${instituteNumber}/dashboard/student`}
+            className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          >
+            🎓 Student
+          </Link>
+          <Link
+            href={`/owner/${instituteNumber}/dashboard/course`}
+            className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          >
+            📚 Course
+          </Link>
+          <Link
+            href={`/owner/${instituteNumber}/dashboard/category`}
+            className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          >
+            🗂️ Category
+          </Link>
+        </nav>
+        <div className="p-4 border-t">
+          <div className="flex items-center">
+            <img
+              className="h-8 w-8 rounded-full"
+              src="https://plus.unsplash.com/premium_photo-1670088465712-2da547587a15?w=700&auto=format&fit=crop&q=60"
+              alt="User"
+            />
+            <div className="ml-3">
+              <p className="text-sm font-medium text-gray-700">Zunaid Sheikh</p>
+              <p className="text-xs font-medium text-gray-500">View Profile</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
+        {children}
+      </main>
+    </div>
+  );
+}
+
+export default Dashboard;
