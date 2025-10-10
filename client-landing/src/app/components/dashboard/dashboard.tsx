@@ -13,7 +13,7 @@ function Dashboard({
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md flex flex-col">
+      <aside className="w-64 bg-sky-100 shadow-md flex flex-col">
         <div className="p-4 border-b">
           <div className="flex items-center">
             <img
@@ -29,7 +29,7 @@ function Dashboard({
         <nav className="mt-5 px-2 flex-1">
           <Link
             href={`/owner/${instituteNumber}/dashboard`}
-            className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-indigo-100 text-indigo-700"
+            className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-sky-200 text-indigo-700"
           >
             🏠 Dashboard
           </Link>
@@ -74,7 +74,7 @@ function Dashboard({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
+      <main className="flex-1 p-6 bg-linear-gradient(to bottom right, #c4b5fd, #a5b4fc, #bfdbfe overflow-y-auto">
         {children}
       </main>
     </div>

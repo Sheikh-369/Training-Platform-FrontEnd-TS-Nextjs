@@ -68,7 +68,7 @@ function InstituteRegister() {
 
     if (result?.success) {
       toast.success(result.message);
-      router.push(`/institute/${result.instituteNumber}/dashboard`);
+      router.push(`/owner/${result.instituteNumber}/dashboard`);
     } else {
       toast.error(result.message || 'Something went wrong!');
     }

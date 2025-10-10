@@ -33,9 +33,12 @@ export function createInstitute(instituteRegisterData: IInstituteRegisterData) {
     dispatch(setStatus(Status.LOADING));
 
     try {
-      const response = await APIWITHTOKEN.post("institute", instituteRegisterData);
+      const response = await APIWITHTOKEN.post("institute", instituteRegisterData,{
+                headers:{
+                    "Content-Type":"multipart/form-data"
+                }
+            });
       const data = response.data;
-
       if (response.status === 200 || response.status === 201) {
         dispatch(setStatus(Status.SUCCESS));
         return {
