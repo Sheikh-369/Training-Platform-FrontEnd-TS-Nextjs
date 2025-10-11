@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
+import Carousel from "./components/home/carousal/carousel";
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
+      <Carousel/>
       <div className="container mx-auto p-4">
         <Navbar onSearchChange={setSearchTerm} />
         <h1 className="text-3xl font-bold mb-8 mt-15 text-center md:text-left">

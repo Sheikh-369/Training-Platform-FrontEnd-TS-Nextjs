@@ -5,6 +5,7 @@ import instituteCourseSlice from "../store/institute-course/institute-course"
 import authSlice from "../store/auth/auth-slice"
 import instituteRegisterSlice from "../store/register-institute/register-institute-slice"
 import ownerSlice from "../store/owner/owner-slice"
+import userInstituteRole from "../store/user-institute-role/user-institute-role-slice"
 
 const store=configureStore({
     reducer:{
@@ -12,7 +13,8 @@ const store=configureStore({
         course:instituteCourseSlice,
         auth:authSlice,
         instituteRegister:instituteRegisterSlice,
-        owner:ownerSlice
+        owner:ownerSlice,
+        userRole:userInstituteRole
     }
 })
 

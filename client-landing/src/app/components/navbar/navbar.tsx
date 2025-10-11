@@ -13,7 +13,7 @@ interface NavbarProps {
 const Navbar = ({ onSearchChange }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  
+
   //logout logic
   const dispatch=useAppDispatch()
   const router=useRouter()
@@ -24,6 +24,12 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
     toast.success("Logged out successfully");
     router.push("/");
   };
+
+  //user institutes
+  const handleMyInstitutesClick = () => {
+    router.push('/my-institutes'); // or whatever route you assign to MyInstitutes page
+  };
+
   //restricting user from creating institute without login
     const handleCreateInstituteClick = () => {
     if (!user) {
@@ -93,12 +99,19 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
           {/* Right: Login & Register Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
+              <>
               <button
                 onClick={handleLogout}
                 className="text-red-600 font-medium cursor-pointer"
               >
                 Logout
               </button>
+                    <Link href="/my-institutes">
+                      <button onClick={handleMyInstitutesClick} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition font-medium">
+                        My Institutes
+                      </button>
+                    </Link>
+              </>
             ) : (
               <Link href="/auth/global/login">
                 <button className="text-blue-600 font-medium cursor-pointer">
@@ -155,7 +168,15 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
               />
             </div>
-
+                    {/* ✅ Add This: My Institutes (if logged in) */}
+                  {isLoggedIn && (
+                    <Link
+                      href="/my-institutes"
+                      className="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-center"
+                    >
+                      My Institutes
+                    </Link>
+                  )}
             
               <button onClick={handleCreateInstituteClick} className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Register Your Institute
