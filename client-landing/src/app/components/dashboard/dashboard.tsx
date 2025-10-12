@@ -1,6 +1,5 @@
 'use client';
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import React from "react";
 
 function Dashboard({
@@ -8,8 +7,6 @@ function Dashboard({
 }: {
   children: React.ReactNode;
 }) {
-  const { instituteNumber } = useParams();
-
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -28,31 +25,31 @@ function Dashboard({
         </div>
         <nav className="mt-5 px-2 flex-1">
           <Link
-            href={`/owner/${instituteNumber}/dashboard`}
+            href={`/owner/dashboard`}
             className="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-sky-200 text-indigo-700"
           >
             🏠 Dashboard
           </Link>
           <Link
-            href={`/owner/${instituteNumber}/dashboard/teacher`}
+            href={`/owner/dashboard/teacher`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             👨‍🏫 Teacher
           </Link>
           <Link
-            href={`/owner/${instituteNumber}/dashboard/student`}
+            href={`/owner/dashboard/student`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             🎓 Student
           </Link>
           <Link
-            href={`/owner/${instituteNumber}/dashboard/course`}
+            href={`/owner/dashboard/course`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             📚 Course
           </Link>
           <Link
-            href={`/owner/${instituteNumber}/dashboard/category`}
+            href={`/owner/dashboard/category`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             🗂️ Category

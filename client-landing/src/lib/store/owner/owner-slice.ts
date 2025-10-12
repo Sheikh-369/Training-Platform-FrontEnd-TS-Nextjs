@@ -4,6 +4,7 @@ import { Status } from "@/lib/global-types/type";
 import { AppDispatch } from "../store";
 import APIWITHTOKEN from "@/lib/https/APIWithToken";
 
+
 const initialState:IOwnerSliceState={
     owner:null,
     status:Status.IDLE
@@ -44,3 +45,48 @@ export function ownerData() {
     }
   };
 }
+
+// export function editInstituteInfo(){
+//   return async function editInstituteInfoThunk(dispatch:AppDispatch){
+//     dispatch(setStatus(Status.LOADING))
+//     try {
+//       const response=await APIWITHTOKEN.patch("institute",{
+//         headers:{
+//                     "Content-Type":"multipart/form-data"
+//                 }
+//       })
+//       if(response.status===200){
+//         dispatch(setStatus(Status.SUCCESS))
+//       }else{
+//         dispatch(setStatus(Status.ERROR))
+//       }
+//     } catch (error) {
+//       console.log(error)
+//       dispatch(setStatus(Status.ERROR))
+//     }
+//   }
+// }
+
+export function editInstituteInfo(formData: FormData) {
+  return async function editInstituteInfoThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await APIWITHTOKEN.patch("institute", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(ownerData()); // refresh the updated data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.log("❌ Error in editInstituteInfoThunk:", error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
+

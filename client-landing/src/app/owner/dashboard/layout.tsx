@@ -10,15 +10,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body>
         <Provider store={store}>
             <Dashboard>
                 {children}
             </Dashboard>
           
         </Provider>
-      </body>
-    </html>
   );
 }

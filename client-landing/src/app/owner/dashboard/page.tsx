@@ -1,16 +1,15 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Status } from '@/lib/global-types/type';
 import { ownerData } from '@/lib/store/owner/owner-slice';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import EditInstituteModal from './edit-institute-modal';
 
 const InstituteProfile = () => {
   const dispatch = useAppDispatch();
-  // const params = useParams();
-  // const instituteNumber = params?.instituteNumber;
   const { owner, status } = useAppSelector((state) => state.owner);
+  //edit institute info
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
       dispatch(ownerData());
@@ -30,6 +29,13 @@ const InstituteProfile = () => {
 
   return (
     <div className="max-w-6xl mx-auto bg-sky-200 rounded-xl shadow-lg p-10 min-h-[80vh] flex flex-col justify-between">
+      {isModalOpen && (
+  <EditInstituteModal 
+    owner={owner} 
+    closeModal={() => setIsModalOpen(false)} 
+  />
+)}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b pb-8 mb-8">
         <div className="flex flex-col sm:flex-row items-center gap-8">
@@ -52,12 +58,13 @@ const InstituteProfile = () => {
         </div>
 
         {/* Edit Button */}
-        <Link
-          href={`/owner/dashboard/edit-institute`}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          // href={`/owner/dashboard/edit-institute`}
           className="mt-6 md:mt-0 inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded hover:bg-indigo-700 transition"
         >
           ✏️ Edit Info
-        </Link>
+        </button>
       </div>
 
       {/* Details Section */}

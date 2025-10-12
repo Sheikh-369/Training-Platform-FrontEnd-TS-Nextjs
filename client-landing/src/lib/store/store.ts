@@ -6,6 +6,7 @@ import authSlice from "../store/auth/auth-slice"
 import instituteRegisterSlice from "../store/register-institute/register-institute-slice"
 import ownerSlice from "../store/owner/owner-slice"
 import userInstituteRole from "../store/user-institute-role/user-institute-role-slice"
+import categorySlice from "../store/owner/category/category-slice"
 
 const store=configureStore({
     reducer:{
@@ -14,7 +15,8 @@ const store=configureStore({
         auth:authSlice,
         instituteRegister:instituteRegisterSlice,
         owner:ownerSlice,
-        userRole:userInstituteRole
+        userRole:userInstituteRole,
+        category:categorySlice
     }
 })
 
