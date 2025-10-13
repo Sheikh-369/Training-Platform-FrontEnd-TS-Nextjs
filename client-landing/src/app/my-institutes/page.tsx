@@ -53,7 +53,7 @@ export default function MyInstitutes() {
 
             return (
               <Link
-                href={`/owner/dashboard`}
+                href={`/${role}/dashboard`}
                 key={`${instituteNumber}-${role}`}
                 className="bg-white border rounded-lg shadow hover:shadow-xl transition-shadow duration-200 overflow-hidden group"
               >
