@@ -3,17 +3,31 @@ import { useEffect, useState } from 'react';
 import { Status } from '@/lib/global-types/type';
 import { ownerData } from '@/lib/store/owner/owner-slice';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import EditInstituteModal from './edit-institute-modal';
+import { useSearchParams } from 'next/navigation';
+// import EditInstituteModal from './edit-institute-modal';
 
 const InstituteProfile = () => {
   const dispatch = useAppDispatch();
   const { owner, status } = useAppSelector((state) => state.owner);
+  //for institute number
+  const searchParams = useSearchParams();
+  const instituteNumber = searchParams.get('instituteNumber'); // ✅
+
   //edit institute info
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // useEffect(() => {
+  //     dispatch(ownerData());
+  // }, [dispatch]);
+
   useEffect(() => {
-      dispatch(ownerData());
-  }, [dispatch]);
+    if (instituteNumber) {
+      dispatch(ownerData(instituteNumber));
+      // Optionally store it in localStorage if needed elsewhere:
+      localStorage.setItem("currentInstitute", JSON.stringify({ instituteNumber }));
+    }
+  }, [dispatch, instituteNumber]);
+
 
   if (status === Status.ERROR) {
     return (
@@ -29,12 +43,12 @@ const InstituteProfile = () => {
 
   return (
     <div className="max-w-6xl mx-auto bg-sky-200 rounded-xl shadow-lg p-10 min-h-[80vh] flex flex-col justify-between">
-      {isModalOpen && (
+      {/* {isModalOpen && (
   <EditInstituteModal 
     owner={owner} 
     closeModal={() => setIsModalOpen(false)} 
   />
-)}
+)} */}
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b pb-8 mb-8">

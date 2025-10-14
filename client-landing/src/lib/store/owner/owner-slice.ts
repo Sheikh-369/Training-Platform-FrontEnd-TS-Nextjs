@@ -28,19 +28,38 @@ export const{setOwner,setStatus}=ownerSlice.actions
 export default ownerSlice.reducer
 
 //fetch institute data
-export function ownerData() {
+// export function ownerData() {
+//   return async function ownerDataThunk(dispatch: AppDispatch) {
+//     dispatch(setStatus(Status.LOADING));
+//     try {
+//       const response = await APIWITHTOKEN.get(`/institute`);
+//       if (response.status === 200) {
+//         dispatch(setOwner(response.data.data?.[0]));
+//         dispatch(setStatus(Status.SUCCESS));
+//       } else {
+//         dispatch(setStatus(Status.ERROR));
+//       }
+//     } catch (error) {
+//       console.log(error);
+//       dispatch(setStatus(Status.ERROR));
+//     }
+//   };
+// }
+
+export function ownerData(instituteNumber: string) {
   return async function ownerDataThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await APIWITHTOKEN.get(`/institute`);
+      const response = await APIWITHTOKEN.get(`/institute-details/${instituteNumber}`);
+      
       if (response.status === 200) {
-        dispatch(setOwner(response.data.data?.[0]));
+        dispatch(setOwner(response.data.data));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));
       }
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch institute:", error);
       dispatch(setStatus(Status.ERROR));
     }
   };
@@ -67,26 +86,26 @@ export function ownerData() {
 //   }
 // }
 
-export function editInstituteInfo(formData: FormData) {
-  return async function editInstituteInfoThunk(dispatch: AppDispatch) {
-    dispatch(setStatus(Status.LOADING));
-    try {
-      const response = await APIWITHTOKEN.patch("institute", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
+// export function editInstituteInfo(formData: FormData) {
+//   return async function editInstituteInfoThunk(dispatch: AppDispatch) {
+//     dispatch(setStatus(Status.LOADING));
+//     try {
+//       const response = await APIWITHTOKEN.patch("institute", formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data"
+//         }
+//       });
 
-      if (response.status === 200) {
-        dispatch(setStatus(Status.SUCCESS));
-        dispatch(ownerData()); // refresh the updated data
-      } else {
-        dispatch(setStatus(Status.ERROR));
-      }
-    } catch (error) {
-      console.log("❌ Error in editInstituteInfoThunk:", error);
-      dispatch(setStatus(Status.ERROR));
-    }
-  };
-}
+//       if (response.status === 200) {
+//         dispatch(setStatus(Status.SUCCESS));
+//         dispatch(ownerData()); // refresh the updated data
+//       } else {
+//         dispatch(setStatus(Status.ERROR));
+//       }
+//     } catch (error) {
+//       console.log("❌ Error in editInstituteInfoThunk:", error);
+//       dispatch(setStatus(Status.ERROR));
+//     }
+//   };
+// }
 

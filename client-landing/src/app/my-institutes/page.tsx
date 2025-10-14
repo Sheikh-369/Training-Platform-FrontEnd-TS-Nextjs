@@ -53,8 +53,10 @@ export default function MyInstitutes() {
 
             return (
               <Link
-                href={`/${role}/dashboard`}
-                key={`${instituteNumber}-${role}`}
+                // href={`/${role}/dashboard`}
+                // key={`${instituteNumber}-${role}`}
+                  href={`/${role}/dashboard?instituteNumber=${instituteNumber}`}
+                  key={`${instituteNumber}-${role}`}
                 className="bg-white border rounded-lg shadow hover:shadow-xl transition-shadow duration-200 overflow-hidden group"
               >
                 <div className="h-40 overflow-hidden">
