@@ -19,7 +19,14 @@ const userInstituteRoleSlice=createSlice({
 
         setStatus(state:IUserInstituteRoleSliceState,action:PayloadAction<Status>){
             state.status=action.payload
-        }
+        },
+
+        // //user logout vaesi usko data pani display nagrne(hataune) code
+        // clearUserInstituteRole(state) {
+        //     state.institutes = [];
+        //     state.status = Status.IDLE;
+        // }
+
     }
 })
 

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { ICategoryData } from "@/lib/store/owner/category/category-slice-type";
-import { updateCategory } from "@/lib/store/owner/category/category-slice";
+// import { updateCategory } from "@/lib/store/owner/category/category-slice";
 
 interface Props {
   category: ICategoryData;
@@ -27,7 +27,7 @@ const EditCategoryModal: React.FC<Props> = ({ category, closeModal }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateCategory(Number(category.id),categoryForm)); // Correct usage
+    // dispatch(updateCategory(Number(category.id),categoryForm)); // Correct usage
     closeModal();
   };
 

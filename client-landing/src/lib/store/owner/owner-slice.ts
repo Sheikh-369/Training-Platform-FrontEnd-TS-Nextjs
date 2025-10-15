@@ -65,47 +65,29 @@ export function ownerData(instituteNumber: string) {
   };
 }
 
-// export function editInstituteInfo(){
-//   return async function editInstituteInfoThunk(dispatch:AppDispatch){
-//     dispatch(setStatus(Status.LOADING))
-//     try {
-//       const response=await APIWITHTOKEN.patch("institute",{
-//         headers:{
-//                     "Content-Type":"multipart/form-data"
-//                 }
-//       })
-//       if(response.status===200){
-//         dispatch(setStatus(Status.SUCCESS))
-//       }else{
-//         dispatch(setStatus(Status.ERROR))
-//       }
-//     } catch (error) {
-//       console.log(error)
-//       dispatch(setStatus(Status.ERROR))
-//     }
-//   }
-// }
+export function editInstituteInfo(formData: FormData) {
+  return async function editInstituteInfoThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await APIWITHTOKEN.patch("institute", formData,
+        {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+    });
 
-// export function editInstituteInfo(formData: FormData) {
-//   return async function editInstituteInfoThunk(dispatch: AppDispatch) {
-//     dispatch(setStatus(Status.LOADING));
-//     try {
-//       const response = await APIWITHTOKEN.patch("institute", formData, {
-//         headers: {
-//           "Content-Type": "multipart/form-data"
-//         }
-//       });
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(ownerData(formData.get("instituteNumber") as string)); // Refresh updated data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error("❌ Error in editInstituteInfoThunk:", error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
 
-//       if (response.status === 200) {
-//         dispatch(setStatus(Status.SUCCESS));
-//         dispatch(ownerData()); // refresh the updated data
-//       } else {
-//         dispatch(setStatus(Status.ERROR));
-//       }
-//     } catch (error) {
-//       console.log("❌ Error in editInstituteInfoThunk:", error);
-//       dispatch(setStatus(Status.ERROR));
-//     }
-//   };
-// }
+
 

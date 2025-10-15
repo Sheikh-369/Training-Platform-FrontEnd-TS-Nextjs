@@ -31,25 +31,25 @@ function Dashboard({
             🏠 Dashboard
           </Link>
           <Link
-            href={`/owner/dashboard/teacher`}
+            href={`/institute/dashboard/teacher`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             👨‍🏫 Teacher
           </Link>
           <Link
-            href={`/owner/dashboard/student`}
+            href={`/institute/dashboard/student`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             🎓 Student
           </Link>
           <Link
-            href={`/owner/dashboard/course`}
+            href={`/institute/dashboard/course`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             📚 Course
           </Link>
           <Link
-            href={`/owner/dashboard/category`}
+            href={`/institute/dashboard/category`}
             className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
           >
             🗂️ Category

@@ -1,6 +1,6 @@
 'use cleint'
 import { useAppDispatch } from "@/lib/store/hooks"
-import { addCategory } from "@/lib/store/owner/category/category-slice"
+// import { addCategory } from "@/lib/store/owner/category/category-slice"
 import { ICategoryData } from "@/lib/store/owner/category/category-slice-type"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
@@ -28,7 +28,7 @@ const AddCategoryModal:React.FC<ICloseModal>=({closeModal})=>{
 
     const handleCategorySubmission=(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        dispatch(addCategory(categoryData))
+        // dispatch(addCategory(categoryData))
         closeModal();
     }
     return(

@@ -24,6 +24,7 @@ const authSlice=createSlice({
         logoutUser(state) {
             state.user = null;
             localStorage.removeItem("token");
+            localStorage.removeItem("user"); // Make sure to clear stored user data
             state.status = Status.IDLE;
         }
 
@@ -145,3 +146,17 @@ export function resetPassword(resetData: IUserData) {
   };
 }
 
+
+export function loadUserFromLocalStorage() {
+  return function loadUserThunk(dispatch: AppDispatch) {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        dispatch(setUser(user));
+      } catch (error) {
+        console.error("Failed to parse user from localStorage", error);
+      }
+    }
+  };
+}

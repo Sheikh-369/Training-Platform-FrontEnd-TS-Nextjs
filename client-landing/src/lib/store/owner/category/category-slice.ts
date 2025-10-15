@@ -29,11 +29,11 @@ export const {setCategory,setStatus,removeCategory}=categorySlice.actions
 export default categorySlice.reducer
 
 // fetch category
-export function fetchCategory(){
+export function fetchCategory(instituteNumber:string){
     return async function fetchCategoryThunk(dispatch:AppDispatch){
         dispatch(setStatus(Status.LOADING))
         try {
-            const response=await APIWITHTOKEN.get("institute/category")
+            const response=await APIWITHTOKEN.get(`institute/category/${instituteNumber}`)
             if(response.status===200){
                 dispatch(setCategory(response.data.data))
                 dispatch(setStatus(Status.SUCCESS))
@@ -48,23 +48,23 @@ export function fetchCategory(){
 }
 
 //add category
-export function addCategory(categoryData:ICategoryData){
-    return async function addCategoryThunk(dispatch:AppDispatch){
-        dispatch(setStatus(Status.LOADING))
-        try {
-            const response=await APIWITHTOKEN.post("institute/category",categoryData)
-            if(response.status===200){
-                dispatch(setStatus(Status.SUCCESS))
-                dispatch(fetchCategory());//all data gets fetched after addition in UI
-            }else{
-                dispatch(setStatus(Status.ERROR))
-            }          
-        } catch (error) {
-            console.log(error)
-            dispatch(setStatus(Status.ERROR))
-        }
-    }
-}
+// export function addCategory(categoryData:ICategoryData){
+//     return async function addCategoryThunk(dispatch:AppDispatch){
+//         dispatch(setStatus(Status.LOADING))
+//         try {
+//             const response=await APIWITHTOKEN.post("institute/category",categoryData)
+//             if(response.status===200){
+//                 dispatch(setStatus(Status.SUCCESS))
+//                 dispatch(fetchCategory());//all data gets fetched after addition in UI
+//             }else{
+//                 dispatch(setStatus(Status.ERROR))
+//             }          
+//         } catch (error) {
+//             console.log(error)
+//             dispatch(setStatus(Status.ERROR))
+//         }
+//     }
+// }
 
 //delete category
 export function deleteCategory(id:number){
@@ -86,19 +86,19 @@ export function deleteCategory(id:number){
 }
 
 // updateCategory
-export function updateCategory(id: number, name: ICategoryData) {
-  return async function updateCategoryThunk(dispatch: AppDispatch) {
-    try {
-      const response = await APIWITHTOKEN.patch("institute/category/"+id, name);
-      if (response.status === 200) {
-        dispatch(setStatus(Status.SUCCESS));
-        dispatch(fetchCategory()); // Refresh data
-      } else {
-        dispatch(setStatus(Status.ERROR));
-      }
-    } catch (error) {
-      console.error(error);
-      dispatch(setStatus(Status.ERROR));
-    }
-  };
-}
+// export function updateCategory(id: number, name: ICategoryData) {
+//   return async function updateCategoryThunk(dispatch: AppDispatch) {
+//     try {
+//       const response = await APIWITHTOKEN.patch("institute/category/"+id, name);
+//       if (response.status === 200) {
+//         dispatch(setStatus(Status.SUCCESS));
+//         dispatch(fetchCategory()); // Refresh data
+//       } else {
+//         dispatch(setStatus(Status.ERROR));
+//       }
+//     } catch (error) {
+//       console.error(error);
+//       dispatch(setStatus(Status.ERROR));
+//     }
+//   };
+// }

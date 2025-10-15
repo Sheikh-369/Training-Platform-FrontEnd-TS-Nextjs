@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Status } from "@/lib/global-types/type";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector, useAuth } from "@/lib/store/hooks";
 import { fetchUserInstitutes } from "@/lib/store/user-institute-role/user-institute-role-slice";
 import Link from "next/link";
 
@@ -10,9 +10,13 @@ export default function MyInstitutes() {
   const dispatch = useAppDispatch();
   const { institutes, status } = useAppSelector((state) => state.userRole);
 
+  const {user}=useAuth()
   useEffect(() => {
-    dispatch(fetchUserInstitutes());
-  }, [dispatch]);
+    console.log("MyInstitutes useEffect — user changed:", user);
+    if(user){
+      dispatch(fetchUserInstitutes());
+    }
+  }, [dispatch,user]);
 
   if (status === Status.LOADING) {
     return <div className="text-center mt-10">Loading your institutes...</div>;

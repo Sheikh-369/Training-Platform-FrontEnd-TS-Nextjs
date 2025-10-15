@@ -4,6 +4,7 @@ import { Status } from '@/lib/global-types/type';
 import { ownerData } from '@/lib/store/owner/owner-slice';
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
 import { useSearchParams } from 'next/navigation';
+import EditInstituteModal from './edit-institute-modal';
 // import EditInstituteModal from './edit-institute-modal';
 
 const InstituteProfile = () => {
@@ -43,12 +44,12 @@ const InstituteProfile = () => {
 
   return (
     <div className="max-w-6xl mx-auto bg-sky-200 rounded-xl shadow-lg p-10 min-h-[80vh] flex flex-col justify-between">
-      {/* {isModalOpen && (
+      {isModalOpen && (
   <EditInstituteModal 
     owner={owner} 
     closeModal={() => setIsModalOpen(false)} 
   />
-)} */}
+)}
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between border-b pb-8 mb-8">

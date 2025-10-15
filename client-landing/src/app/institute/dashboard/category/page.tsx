@@ -6,10 +6,15 @@ import { useEffect, useState } from "react"
 import AddCategoryModal from "./add-category-modal"
 import EditCategoryModal from "./edit-category-modal"
 import DeleteCategoryModal from "./delete-category-modal"
+import { useSearchParams } from "next/navigation"
 
 
 function InstituteCategory(){
     const dispatch=useAppDispatch()
+    //importing institute number
+    const searchParams = useSearchParams();
+    const instituteNumber = searchParams.get('instituteNumber');
+
   //categoryFetchingLOgic
   const {category}=useAppSelector((store)=>store.category)
   //delete logic
@@ -53,9 +58,13 @@ function InstituteCategory(){
     });
 
       //usedToFetchCategory
-  useEffect(()=>{
-      dispatch(fetchCategory())
-    },[])
+  useEffect(() => {
+    if (instituteNumber) {
+      dispatch(fetchCategory(instituteNumber));
+      localStorage.setItem("currentInstitute", JSON.stringify({ instituteNumber }));
+    }
+  }, [dispatch, instituteNumber]);
+
 
   return(
         <>
