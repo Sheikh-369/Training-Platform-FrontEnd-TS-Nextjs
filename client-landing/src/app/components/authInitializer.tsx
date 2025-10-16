@@ -1,4 +1,4 @@
-// // components/AuthInitializer.tsx
+// // // components/AuthInitializer.tsx
 // 'use client';
 
 // import { useEffect } from "react";
@@ -21,7 +21,7 @@
 // }
 
 
-// components/AuthInitializer.tsx
+// // components/AuthInitializer.tsx
 'use client';
 
 import { useEffect } from "react";
@@ -51,4 +51,34 @@ export default function AuthInitializer() {
 
   return null; // No UI
 }
+
+
+//2nd method
+// 'use client';
+
+// import { useEffect } from "react";
+// import { useAppDispatch } from "@/lib/store/hooks";
+// import { setUser } from "@/lib/store/auth/auth-slice";
+// import { ownerData } from "@/lib/store/owner/owner-slice"; // ✅ import this
+
+// export default function AuthInitializer() {
+//   const dispatch = useAppDispatch();
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const user = localStorage.getItem("user");
+
+//     if (token && user) {
+//       const parsedUser = JSON.parse(user);
+//       dispatch(setUser(parsedUser));
+
+//       // ✅ Dispatch ownerData here
+//       if (parsedUser.instituteNumber) {
+//         dispatch(ownerData(parsedUser.instituteNumber));
+//       }
+//     }
+//   }, [dispatch]);
+
+//   return null;
+// }
 

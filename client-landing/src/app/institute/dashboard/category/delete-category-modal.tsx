@@ -6,13 +6,14 @@ import { ICategoryData } from "@/lib/store/owner/category/category-slice-type";
 interface DeleteCategoryModalProps {
   category: ICategoryData;
   closeModal: () => void;
+  instituteNumber:string;
 }
 
-const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ category, closeModal }) => {
+const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({ category, closeModal,instituteNumber }) => {
   const dispatch = useAppDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteCategory(Number(category.id)));
+    dispatch(deleteCategory(instituteNumber,Number(category.id)));
     closeModal();
   };
 

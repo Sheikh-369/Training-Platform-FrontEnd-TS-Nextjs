@@ -1,14 +1,16 @@
 'use cleint'
 import { useAppDispatch } from "@/lib/store/hooks"
+import { addCategory } from "@/lib/store/owner/category/category-slice"
 // import { addCategory } from "@/lib/store/owner/category/category-slice"
 import { ICategoryData } from "@/lib/store/owner/category/category-slice-type"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 interface ICloseModal{
-    closeModal:()=>void
+    closeModal:()=>void;
+    instituteNumber: string;
 }
 
-const AddCategoryModal:React.FC<ICloseModal>=({closeModal})=>{
+const AddCategoryModal:React.FC<ICloseModal>=({closeModal,instituteNumber})=>{
     
     const dispatch=useAppDispatch()
     const [categoryData,setCategoryData]=useState<ICategoryData>({
@@ -29,6 +31,8 @@ const AddCategoryModal:React.FC<ICloseModal>=({closeModal})=>{
     const handleCategorySubmission=(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         // dispatch(addCategory(categoryData))
+        dispatch(addCategory(instituteNumber, categoryData));
+
         closeModal();
     }
     return(
