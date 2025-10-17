@@ -68,7 +68,7 @@ function Register() {
         <header className="text-center">
           <img
             className="w-12 mx-auto mb-3"
-            src="https://img.icons8.com/fluent/344/year-of-tiger.png"
+            src="https://img.icons8.com/fluent/48/user-male-circle.png"
             alt="Logo"
           />
         </header>

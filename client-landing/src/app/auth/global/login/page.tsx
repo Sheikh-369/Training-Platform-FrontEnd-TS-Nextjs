@@ -65,7 +65,7 @@ function Login() {
         <header className="text-center">
           <img
             className="w-12 mx-auto mb-3"
-            src="https://img.icons8.com/fluent/344/year-of-tiger.png"
+            src="https://img.icons8.com/ios-filled/50/login-rounded-right.png"
             alt="Logo"
           />
         </header>
