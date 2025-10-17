@@ -24,11 +24,11 @@ export const{setInstituteTeacher,setStatus}=instituteTeacherSlice.actions
 export default instituteTeacherSlice.reducer
 
 //fetch teachers
-export function fetchAllTeachers(){
+export function fetchAllTeachers(instituteNumber:string){
     return async function fetchAllTeachersThunk(dispatch:AppDispatch){
         dispatch(setStatus(Status.LOADING))
         try {
-            const response=await APIWITHTOKEN.get("institute/teacher")
+            const response=await APIWITHTOKEN.get(`institute/${instituteNumber}/teacher`)
             if(response.status===200){
                 dispatch(setInstituteTeacher(response.data.data))
                 dispatch(setStatus(Status.SUCCESS))
@@ -43,17 +43,17 @@ export function fetchAllTeachers(){
 }
 
 //create teacher
-export function createTeacher(teacherData:IInstituteTeacherData){
+export function createTeacher(instituteNumber:string,teacherData:IInstituteTeacherData){
     return async function createTeacherThunk(dispatch:AppDispatch){
         dispatch(setStatus(Status.LOADING))
         try {
-            const response=await APIWITHTOKEN.post("institute/teacher",teacherData,{
+            const response=await APIWITHTOKEN.post(`institute/${instituteNumber}/teacher`,teacherData,{
                 headers: {
                 "Content-Type": "multipart/form-data"
                 }})
             if(response.status===200){
                 dispatch(setStatus(Status.SUCCESS))
-                dispatch(fetchAllTeachers())
+                dispatch(fetchAllTeachers(instituteNumber))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }

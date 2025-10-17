@@ -27,13 +27,13 @@ export const { setStatus, setTeacher } = teacherSlice.actions;
 export default teacherSlice.reducer;
 
 //fetch teacher information
-export function fetchTeacherInfo() {
+export function fetchTeacherInfo(instituteNumber:string) {
   return async function fetchTeacherInfoThunk(dispatch: AppDispatch) {
     dispatch(setStatus(Status.LOADING));
     try {
-      const response = await APIWITHTOKEN.get("institute/teacher");
+      const response = await APIWITHTOKEN.get(`institute/${instituteNumber}/teacher`);
       if (response.status === 200) {
-        dispatch(setTeacher(response.data.data));
+        dispatch(setTeacher(response.data.data[0]));
         dispatch(setStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));

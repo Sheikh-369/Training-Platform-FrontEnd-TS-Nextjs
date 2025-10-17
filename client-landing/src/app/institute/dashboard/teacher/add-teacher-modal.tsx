@@ -7,9 +7,10 @@ import { createTeacher } from "@/lib/store/owner/teacher/teacher-slice";
 
 interface AddTeacherModalProps {
   closeModal: () => void;
+  instituteNumber:string;
 }
 
-export default function AddTeacherModal({ closeModal }: AddTeacherModalProps) {
+export default function AddTeacherModal({ closeModal,instituteNumber }: AddTeacherModalProps) {
   const dispatch = useAppDispatch();
 
   const [teacherData, setTeacherData] = useState<IInstituteTeacherData>({
@@ -35,7 +36,7 @@ export default function AddTeacherModal({ closeModal }: AddTeacherModalProps) {
 
   const handleTeacherDataSubmission = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(createTeacher(teacherData));
+    await dispatch(createTeacher(instituteNumber,teacherData));
     closeModal();
   };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   UserCircleIcon,
@@ -10,7 +10,11 @@ import {
   ArrowRightOnRectangleIcon,
   BookOpenIcon,
   DocumentTextIcon,
+  HomeIcon
 } from "@heroicons/react/24/outline";
+import { useAppDispatch, useAppSelector, useAuth } from "@/lib/store/hooks";
+import { logoutUser } from "@/lib/store/auth/auth-slice";
+import toast from "react-hot-toast";
 
 export default function TeacherDashboardLayout({
   children,
@@ -18,6 +22,13 @@ export default function TeacherDashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  //back to my-institutes
+  const router = useRouter();
+  //logout logic
+  const dispatch = useAppDispatch();
+  const { user } = useAuth();
+  // ✅ Get teacher info from Redux store
+  const teacher = useAppSelector((state) => state.teacher.teacher);
 
   const navItems = [
     { name: "Profile", href: "/teacher/dashboard", icon: UserCircleIcon },
@@ -28,15 +39,35 @@ export default function TeacherDashboardLayout({
     { name: "Settings", href: "/teacher/dashboard/settings", icon: Cog6ToothIcon },
   ];
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    toast.success("Logged out successfully");
+    router.push("/");
+  };
+
+  const handleMyInstitutesClick = () => {
+    router.push("/my-institutes");
+  };
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="bg-[#4c5d85] text-[#f0f3f9] w-64 h-screen flex flex-col">
         {/* Logo / User Info */}
         <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-300/20">
-          <UserCircleIcon className="h-10 w-10 text-white" />
+          {teacher?.teacherImage ? (
+            <img
+              src={teacher.teacherImage}
+              alt={teacher.teacherName}
+              className="w-10 h-10 rounded-full object-cover border-2 border-white"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gray-300" />
+          )}
           <div>
-            <p className="font-semibold text-white">John Doe</p>
+            <p className="font-semibold text-white">
+              {teacher?.teacherName || "Loading..."}
+            </p>
             <p className="text-sm text-gray-300">Teacher</p>
           </div>
         </div>
@@ -62,15 +93,20 @@ export default function TeacherDashboardLayout({
           })}
         </nav>
 
+        {/* Back to Institutes Button */}
+        <button
+          type="button"
+          onClick={() => router.push("/my-institutes")}
+          className="flex items-center gap-3 px-6 py-3 mx-4 mb-3 text-blue-200 hover:bg-blue-100 hover:text-blue-700 transition rounded-md"
+        >
+          <HomeIcon className="h-6 w-6" />
+          <span>My Institutes</span>
+        </button>
         {/* Logout */}
         <button
           type="button"
           className="flex items-center gap-3 px-6 py-3 mb-6 text-red-400 hover:bg-red-100 hover:text-red-700 transition rounded-md mx-4"
-          onClick={() => {
-            // Add your logout logic here
-            alert("Logout clicked!");
-          }}
-        >
+          onClick={handleLogout}>
           <ArrowRightOnRectangleIcon className="h-6 w-6" />
           <span>Logout</span>
         </button>

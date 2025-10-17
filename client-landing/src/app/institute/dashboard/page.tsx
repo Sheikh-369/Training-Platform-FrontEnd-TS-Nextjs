@@ -23,7 +23,7 @@ const InstituteProfile = () => {
 
   useEffect(() => {
     if (instituteNumber) {
-      dispatch(ownerData(instituteNumber));
+      dispatch(ownerData(String(instituteNumber)));
       // Optionally store it in localStorage if needed elsewhere:
       localStorage.setItem("currentInstitute", JSON.stringify({ instituteNumber }));
     }
@@ -43,7 +43,7 @@ const InstituteProfile = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-sky-200 rounded-xl shadow-lg p-10 min-h-[80vh] flex flex-col justify-between">
+    <div className="max-w-6xl mx-auto bg-sky-300 rounded-xl shadow-lg p-10 min-h-[80vh] flex flex-col justify-between">
       {isModalOpen && (
   <EditInstituteModal 
     owner={owner} 

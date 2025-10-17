@@ -1,7 +1,7 @@
 "use client";
 import { logoutUser } from "@/lib/store/auth/auth-slice";
 import { useAppDispatch, useAppSelector, useAuth } from "@/lib/store/hooks";
-// import { clearUserInstituteRole } from "@/lib/store/user-institute-role/user-institute-role-slice";
+import { clearUserInstituteRole } from "@/lib/store/user-institute-role/user-institute-role-slice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
   
   const handleLogout = () => {
     dispatch(logoutUser());
-    // dispatch(clearUserInstituteRole());
+    dispatch(clearUserInstituteRole());
     toast.success("Logged out successfully");
     router.push("/");
   };

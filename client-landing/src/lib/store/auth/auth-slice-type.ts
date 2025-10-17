@@ -2,6 +2,7 @@ import { Status } from "@/lib/global-types/type";
 
 
 export interface IUserData {
+  id?:string,
   userName?: string;
   userEmail: string;
   userPassword?:string,

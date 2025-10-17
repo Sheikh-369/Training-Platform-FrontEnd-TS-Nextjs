@@ -1,21 +1,30 @@
 'use client'
 
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { createTeacher, fetchAllTeachers } from "@/lib/store/owner/teacher/teacher-slice";
+import {  fetchAllTeachers } from "@/lib/store/owner/teacher/teacher-slice";
 import { IInstituteTeacherData } from "@/lib/store/owner/teacher/teacher-slice-type";
 import { useEffect, useState } from "react";
 import AddTeacherModal from "./add-teacher-modal";
+import { useSearchParams } from "next/navigation";
 
 export default function InstituteTeacher() {
   const dispatch = useAppDispatch();
   const instituteTeacher = useAppSelector((store) => store.instituteTeacher.instituteTeacher);
+  //importing institute number
+  // const searchParams = useSearchParams();
+  // const instituteNumber = searchParams.get('instituteNumber');
+  const owner = useAppSelector((state) => state.owner.owner);
+  const instituteNumber = owner?.instituteNumber;
+
   const [searchedText, setSearchedText] = useState("");
   //add teacher
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchAllTeachers());
-  }, [dispatch]);
+    if(instituteNumber){
+      dispatch(fetchAllTeachers(String(instituteNumber)));
+    }  
+  }, [instituteNumber,dispatch]);
 
   const filteredData = (instituteTeacher ?? []).filter((t) => {
     const searchLower = searchedText.toLowerCase();
@@ -59,7 +68,7 @@ export default function InstituteTeacher() {
         >
           + Add Teacher
         </button>
-        {isAddModalOpen && <AddTeacherModal closeModal={() => setIsAddModalOpen(false)} />}
+        {isAddModalOpen && instituteNumber && (<AddTeacherModal closeModal={() => setIsAddModalOpen(false)} instituteNumber={String(instituteNumber)} />)}
       </div>
 
       {/* Table */}

@@ -22,20 +22,21 @@ const userInstituteRoleSlice=createSlice({
         },
 
         // //user logout vaesi usko data pani display nagrne(hataune) code
-        // clearUserInstituteRole(state) {
-        //     state.institutes = [];
-        //     state.status = Status.IDLE;
-        // }
+        clearUserInstituteRole(state) {
+            state.institutes = [];
+            state.status = Status.IDLE;
+        }
 
     }
 })
 
-export const{setStatus,setUserInstituteRole}=userInstituteRoleSlice.actions
+export const{setStatus,setUserInstituteRole,clearUserInstituteRole}=userInstituteRoleSlice.actions
 export default userInstituteRoleSlice.reducer
 
 //fetching all institutes where user is linked with as teacher/student/owner
 export function fetchUserInstitutes(){
     return async function fetchUserInstitutesThunk(dispatch:AppDispatch){
+        dispatch(clearUserInstituteRole()); // ✅ Clear stale data
         dispatch(setStatus(Status.LOADING))
         try {
             const response=await APIWITHTOKEN.get("user-institutes")

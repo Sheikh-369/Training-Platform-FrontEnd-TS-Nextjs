@@ -10,6 +10,7 @@ import Carousel from "./components/home/carousal/carousel";
 
 const HomePage = () => {
   const dispatch = useAppDispatch();
+  //search logic
   const [searchTerm, setSearchTerm] = useState("");
   const { institute, status } = useAppSelector((store) => store.home);
 
