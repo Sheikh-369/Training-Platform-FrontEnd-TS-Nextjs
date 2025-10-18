@@ -10,6 +10,7 @@ import categorySlice from "../store/owner/category/category-slice"
 import teacherSlice from "../store/teacher/teacher-slice"
 import instituteTeacherSlice from "../store/owner/teacher/teacher-slice"
 import instituteStudentSlice from "../store/owner/student/student-slice"
+import studentSlice from "../store/student/student-slice"
 
 const store=configureStore({
     reducer:{
@@ -22,7 +23,8 @@ const store=configureStore({
         category:categorySlice,
         teacher:teacherSlice,
         instituteTeacher:instituteTeacherSlice,
-        instituteStudent:instituteStudentSlice
+        instituteStudent:instituteStudentSlice,
+        student:studentSlice
     }
 })
 

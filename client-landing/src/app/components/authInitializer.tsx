@@ -85,11 +85,45 @@
 
 
 //4th
+// 'use client';
+
+// import { useEffect } from "react";
+// import { useAppDispatch } from "@/lib/store/hooks";
+// import { setOwner } from "@/lib/store/owner/owner-slice";
+
+// export default function AuthInitializer() {
+//   const dispatch = useAppDispatch();
+
+//   useEffect(() => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const user = localStorage.getItem("user");
+
+//       console.log("AuthInitializer running...", {
+//         token,
+//         user,
+//       });
+
+//       if (token && user) {
+//         const parsedUser = JSON.parse(user);
+//         dispatch(setOwner(parsedUser)); // ✅ now updates the correct slice
+//       }
+//     } catch (error) {
+//       console.error("Failed to load user from localStorage:", error);
+//     }
+//   }, [dispatch]);
+
+//   return null; // No UI
+// }
+
+
+
+//5th
 'use client';
 
 import { useEffect } from "react";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setOwner } from "@/lib/store/owner/owner-slice";
+import { setUser } from "@/lib/store/auth/auth-slice"; // ✅ Use correct slice
 
 export default function AuthInitializer() {
   const dispatch = useAppDispatch();
@@ -106,12 +140,12 @@ export default function AuthInitializer() {
 
       if (token && user) {
         const parsedUser = JSON.parse(user);
-        dispatch(setOwner(parsedUser)); // ✅ now updates the correct slice
+        dispatch(setUser(parsedUser)); // ✅ Correctly populates Redux auth.user
       }
     } catch (error) {
       console.error("Failed to load user from localStorage:", error);
     }
   }, [dispatch]);
 
-  return null; // No UI
+  return null;
 }
