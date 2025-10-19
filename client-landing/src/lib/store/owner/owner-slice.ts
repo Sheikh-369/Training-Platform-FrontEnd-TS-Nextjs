@@ -21,6 +21,7 @@ const ownerSlice=createSlice({
         setStatus(state:IOwnerSliceState,action:PayloadAction<Status>){
             state.status=action.payload
         }
+
     }
 })
 

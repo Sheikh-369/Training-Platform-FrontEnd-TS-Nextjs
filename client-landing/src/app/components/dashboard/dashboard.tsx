@@ -186,6 +186,7 @@ function Dashboard({ children }: { children: React.ReactNode }) {
               {owner?.instituteName || "Dashboard"}
             </span>
           </div>
+          <p className="text-sm text-black-300">Institute</p>
         </div>
 
         <nav className="mt-5 px-2 flex-1 flex flex-col">
