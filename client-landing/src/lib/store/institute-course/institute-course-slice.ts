@@ -6,6 +6,7 @@ import API from "@/lib/https/API";
 
 const initialState:IInstituteCourseSliceState={
     instituteCourse:[],
+    selectedCourse: null, 
     status:Status.IDLE
 }
 
@@ -27,10 +28,14 @@ const instituteCourseSlice=createSlice({
             state.instituteCourse = [];
             state.status = Status.IDLE;
         },
+
+        setSelectedCourse(state, action: PayloadAction<IInstituteCourseData | null>) {
+            state.selectedCourse = action.payload;
+        }
     }
 })
 
-export const {setInstituteCourse,setStatus,resetInstituteCourse}=instituteCourseSlice.actions
+export const {setInstituteCourse,setStatus,resetInstituteCourse,setSelectedCourse}=instituteCourseSlice.actions
 export default instituteCourseSlice.reducer
 
 //fetch all courses of an institute
@@ -51,4 +56,23 @@ export function fetchAllCourses(instituteId:number){
             dispatch(setStatus(Status.ERROR))
         }
     }
+}
+
+//fetch course by id
+export function fetchCourseById(instituteId: number, courseId: number) {
+  return async function fetchCourseById(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    try {
+      const response = await API.get(`student/${instituteId}/course/${courseId}`);
+      if (response.status === 200) {
+        dispatch(setSelectedCourse(response.data.data));
+        dispatch(setStatus(Status.SUCCESS));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
 }

@@ -13,22 +13,19 @@ function InstituteCourse() {
   const instituteNumber = searchParams.get("instituteNumber");
 
   const { course, status } = useAppSelector((state) => state.courseOwner);
-  //add course modal logic
+
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
+  const [searchText, setSearchText] = useState<string>("");
+
   const openAddCourseModal = () => setIsAddCourseModalOpen(true);
   const closeAddCourseModal = () => setIsAddCourseModalOpen(false);
 
-  //search logic
-  const [searchText, setSearchText] = useState<string>("");
-
-  // Fetch courses on mount
   useEffect(() => {
     if (instituteNumber) {
       dispatch(fetchCourse(instituteNumber));
     }
   }, [dispatch, instituteNumber]);
 
-  // Filtered courses based on search
   const filteredCourses = course?.filter((c) => {
     const lower = searchText.toLowerCase();
     return (
@@ -40,96 +37,105 @@ function InstituteCourse() {
   });
 
   return (
-    <div className="flex flex-col">
-              {/* ✅ Conditionally render modal */}
+    <div className="p-6 bg-white rounded-xl shadow-sm">
+      {/* ✅ Add Modal */}
       {isAddCourseModalOpen && (
         <AddCourseModal
           closeModal={closeAddCourseModal}
           instituteNumber={String(instituteNumber)}
         />
       )}
-      <div className="overflow-x-auto">
-        <div className="flex justify-between relative text-gray-500 focus-within:text-gray-900 mb-4">
-          {/* Search input */}
-          <div className="absolute inset-y-0 left-1 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-4.35-4.35M17 11A6 6 0 1 0 5 11a6 6 0 0 0 12 0z"
-              />
-            </svg>
-          </div>
+
+      {/* ✅ Header */}
+      <div className="flex justify-between items-center mb-4">
+        <div className="relative w-80">
           <input
             type="text"
+            placeholder="Search courses..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search course by name, teacher, category..."
-            className="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none"
+            className="w-full px-4 py-2 pl-10 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <button
-        onClick={openAddCourseModal}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
-        Add New Course
-      </button>
+          <svg
+            className="w-5 h-5 absolute left-3 top-2.5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35M17 11A6 6 0 1 0 5 11a6 6 0 0 0 12 0z"
+            />
+          </svg>
         </div>
 
-        {/* Loading and Error States */}
-        {status === Status.LOADING && <p>Loading courses...</p>}
-        {status === Status.ERROR && <p className="text-red-500">Failed to fetch courses.</p>}
-
-        {/* Table */}
-        {status === Status.SUCCESS && (
-          <div className="overflow-hidden">
-            <table className="min-w-full rounded-xl">
-              <thead>
-                <tr className="bg-sky-300">
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900"></th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Name</th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Price</th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Duration</th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Level</th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Category</th>
-                  <th className="p-5 text-left text-sm font-semibold text-gray-900">Teacher</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-300">
-                {filteredCourses?.map((course: ICourseData) => (
-                  <tr key={course.id} className="bg-white hover:bg-gray-50 transition-all">
-                    <td>
-                    {typeof course.courseThumbnail === "string" && course.courseThumbnail ? (
-                        <img src={course.courseThumbnail} alt="Course Thumbnail" className="w-12 h-12 object-cover rounded-2xl" />
-                    ) : (
-                        "No thumbnail"
-                    )}
-                    </td>
-                    <td className="p-5 text-sm text-gray-900">{course.courseName}</td>
-                    <td className="p-5 text-sm text-gray-900">{course.coursePrice}</td>
-                    <td className="p-5 text-sm text-gray-900">{course.courseDuration}</td>
-                    <td className="p-5 text-sm text-gray-900">{course.courseLevel}</td>
-                    <td className="p-5 text-sm text-gray-900">{course.categoryName}</td>
-                    <td className="p-5 text-sm text-gray-900">{course.teacherName}</td>
-                  </tr>
-                ))}
-                {filteredCourses?.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="p-5 text-center text-sm text-gray-500">
-                      No courses found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <button
+          onClick={openAddCourseModal}
+          className="bg-green-600 hover:bg-green-700 transition text-white px-4 py-2 rounded-full text-sm font-semibold"
+        >
+          + Add Course
+        </button>
       </div>
+
+      {/* ✅ Content */}
+      {status === Status.LOADING && (
+        <p className="text-gray-500 text-center py-6">Loading courses...</p>
+      )}
+
+      {status === Status.ERROR && (
+        <p className="text-red-500 text-center py-6">Failed to fetch courses.</p>
+      )}
+
+      {status === Status.SUCCESS && (
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 text-sm text-left">
+            <thead className="bg-sky-300 text-gray-700 font-semibold">
+              <tr>
+                <th className="px-4 py-3">Thumbnail</th>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Price</th>
+                <th className="px-4 py-3">Duration</th>
+                <th className="px-4 py-3">Level</th>
+                <th className="px-4 py-3">Category</th>
+                <th className="px-4 py-3">Teacher</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {filteredCourses && filteredCourses.length > 0 ? (
+                filteredCourses.map((course: ICourseData) => (
+                  <tr key={course.id} className="hover:bg-gray-50 transition">
+                    <td className="px-4 py-3">
+                      {typeof course.courseThumbnail === "string" && course.courseThumbnail ? (
+                        <img
+                          src={course.courseThumbnail}
+                          alt="Thumbnail"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-gray-400 text-xs">No image</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">{course.courseName}</td>
+                    <td className="px-4 py-3">{course.coursePrice}</td>
+                    <td className="px-4 py-3">{course.courseDuration}</td>
+                    <td className="px-4 py-3">{course.courseLevel}</td>
+                    <td className="px-4 py-3">{course.categoryName}</td>
+                    <td className="px-4 py-3">{course.teacherName}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} className="text-center text-gray-500 py-6">
+                    No courses found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

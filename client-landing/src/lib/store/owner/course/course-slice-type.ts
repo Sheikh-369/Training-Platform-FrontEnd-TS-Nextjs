@@ -16,5 +16,6 @@ export interface ICourseData{
 
 export interface ICourseSliceState{
     course:ICourseData[] | null,
+    selectedCourse: ICourseData | null,
     status:Status
 }

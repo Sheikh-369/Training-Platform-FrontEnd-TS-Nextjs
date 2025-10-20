@@ -7,6 +7,7 @@ import APIWITHTOKEN from "@/lib/https/APIWithToken";
 
 const initialState:ICourseSliceState={
     course:null,
+    selectedCourse: null,
     status:Status.LOADING
     
 }
@@ -18,13 +19,17 @@ const courseSlice=createSlice({
             state.course=action.payload
         },
 
+        setSelectedCourse(state, action: PayloadAction<ICourseData>) {
+            state.selectedCourse = action.payload;
+        },
+
         setStatus(state:ICourseSliceState,action:PayloadAction<Status>){
             state.status=action.payload
         }
     }
 })
 
-const {setCourse,setStatus}=courseSlice.actions
+const {setCourse,setStatus,setSelectedCourse}=courseSlice.actions
 export default courseSlice.reducer
 
 //fetch course
@@ -35,6 +40,25 @@ export function fetchCourse(instituteNumber:string){
             const response=await APIWITHTOKEN.get(`institute/${instituteNumber}/course`)
         if(response.status===200){
             dispatch(setCourse(response.data.data))
+            dispatch(setStatus(Status.SUCCESS))
+        }else{
+            dispatch(setStatus(Status.ERROR))
+        }
+        } catch (error) {
+            console.log(error)
+            dispatch(setStatus(Status.ERROR))
+        }
+    }
+}
+
+//fetch single course for student in public page
+export function fetchSingleCourse(instituteNumber:string,courseId:number){
+    return async function fetchSingleCourseThunk(dispatch:AppDispatch){
+        dispatch(setStatus(Status.LOADING))
+        try {
+            const response=await APIWITHTOKEN.get(`institute/${instituteNumber}/course/${courseId}`)
+        if(response.status===200 && response.data.data?.length > 0){
+            dispatch(setSelectedCourse(response.data.data[0]));
             dispatch(setStatus(Status.SUCCESS))
         }else{
             dispatch(setStatus(Status.ERROR))
