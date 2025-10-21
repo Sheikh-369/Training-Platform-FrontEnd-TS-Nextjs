@@ -1,127 +1,3 @@
-// // 'use client';
-// // import React, { useEffect } from "react";
-// // import { useParams } from "next/navigation";
-// // import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-// // import {
-// //   fetchAllCourses,
-// //   resetInstituteCourse,
-// // } from "@/lib/store/institute-course/institute-course";
-// // import { Status } from "@/lib/global-types/type";
-// // import { FaClock, FaTag, FaMoneyBillWave } from "react-icons/fa";
-
-// // const InstituteCourses = () => {
-// //   const { instituteId } = useParams() as { instituteId?: string };
-// //   const dispatch = useAppDispatch();
-// //   const { instituteCourse, status } = useAppSelector((store) => store.course);
-
-// //   useEffect(() => {
-// //     if (instituteId && !isNaN(Number(instituteId))) {
-// //       dispatch(resetInstituteCourse()); // ✅ Clear old data
-// //       dispatch(fetchAllCourses(Number(instituteId))); // ✅ Fetch new data
-// //     } else {
-// //       console.error("Invalid instituteId:", instituteId);
-// //     }
-// //   }, [dispatch, instituteId]);
-
-// //   if (status === Status.LOADING) {
-// //     return (
-// //       <div className="min-h-screen flex items-center justify-center text-gray-600 text-xl">
-// //         Loading courses...
-// //       </div>
-// //     );
-// //   }
-
-// //   if (status === Status.SUCCESS && instituteCourse.length === 0) {
-// //     return (
-// //       <div className="min-h-screen flex items-center justify-center text-gray-600 text-xl">
-// //         No courses found for this institute.
-// //       </div>
-// //     );
-// //   }
-
-// //   if (status !== Status.SUCCESS) return null;
-
-// //   const { instituteName, instituteImage } = instituteCourse[0] || {};
-
-// //   return (
-// //     <div className="min-h-screen bg-gray-50">
-// //       <h1 className="text-3xl font-bold text-center mt-10 text-indigo-700">
-// //         Welcome to {instituteName}
-// //       </h1>
-
-// //       {/* Hero Section */}
-// //       <div className="bg-white shadow-md py-8 px-4 md:px-12 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-// //         {instituteImage ? (
-// //           <img
-// //             src={instituteImage}
-// //             alt={`${instituteName} logo`}
-// //             className="w-40 h-40 object-cover rounded-lg shadow-md"
-// //           />
-// //         ) : (
-// //           <div className="w-24 h-24 bg-gray-300 rounded flex items-center justify-center text-gray-500">
-// //             No Image
-// //           </div>
-// //         )}
-// //         <div>
-// //           <h1 className="text-4xl font-bold text-gray-800">{instituteName}</h1>
-// //           <p className="text-gray-500 mt-1">Explore all available courses</p>
-// //         </div>
-// //       </div>
-
-// //       {/* Course Listing */}
-// //       <div className="container mx-auto px-4 py-10">
-// //         <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-// //           Courses Offered
-// //         </h2>
-
-// //         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-// //           {instituteCourse.map((course) => (
-// //             <div
-// //               key={course.id || `${course.courseName}-${course.categoryName}`}
-// //               className="bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 p-6 flex flex-col justify-between"
-// //             >
-// //               <div>
-// //                 <h3 className="text-xl font-semibold text-gray-800 mb-2">
-// //                   {course.courseName}
-// //                 </h3>
-// //                 <p className="text-gray-600 mb-4 text-sm">
-// //                   {course.courseDescription?.substring(0, 120) ||
-// //                     "No description."}
-// //                 </p>
-
-// //                 <div className="space-y-2 text-sm text-gray-700">
-// //                   <div className="flex items-center space-x-2">
-// //                     <FaTag className="text-gray-500" />
-// //                     <span className="font-medium">Category:</span>
-// //                     <span>{course.categoryName}</span>
-// //                   </div>
-// //                   <div className="flex items-center space-x-2">
-// //                     <FaClock className="text-gray-500" />
-// //                     <span className="font-medium">Duration:</span>
-// //                     <span>{course.courseDuration}</span>
-// //                   </div>
-// //                   <div className="flex items-center space-x-2">
-// //                     <FaMoneyBillWave className="text-gray-500" />
-// //                     <span className="font-medium">Price:</span>
-// //                     <span>{course.coursePrice}</span>
-// //                   </div>
-// //                 </div>
-// //               </div>
-
-// //               <button className="mt-6 w-full text-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
-// //                 View Details
-// //               </button>
-// //             </div>
-// //           ))}
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default InstituteCourses;
-
-// //2nd code
 // "use client";
 // import React, { useEffect } from "react";
 // import { useParams } from "next/navigation";
@@ -132,6 +8,7 @@
 // } from "@/lib/store/institute-course/institute-course-slice";
 // import { Status } from "@/lib/global-types/type";
 // import { FaClock, FaTag, FaMoneyBillWave } from "react-icons/fa";
+// import Link from "next/link";
 
 // const InstituteCourses = () => {
 //   const { instituteId } = useParams() as { instituteId?: string };
@@ -140,14 +17,13 @@
 
 //   useEffect(() => {
 //     if (instituteId && !isNaN(Number(instituteId))) {
-//       dispatch(resetInstituteCourse()); // ✅ Clear old data
-//       dispatch(fetchAllCourses(Number(instituteId))); // ✅ Fetch new data
+//       dispatch(resetInstituteCourse());
+//       dispatch(fetchAllCourses(Number(instituteId)));
 //     } else {
 //       console.error("Invalid instituteId:", instituteId);
 //     }
 //   }, [dispatch, instituteId]);
 
-//   // ✅ Loading state
 //   if (status === Status.LOADING) {
 //     return (
 //       <div className="min-h-screen flex items-center justify-center text-gray-600 text-xl">
@@ -156,7 +32,6 @@
 //     );
 //   }
 
-//   // ✅ Error state (optional)
 //   if (status === Status.ERROR) {
 //     return (
 //       <div className="min-h-screen flex items-center justify-center text-red-600 text-xl">
@@ -164,8 +39,8 @@
 //       </div>
 //     );
 //   }
+// console.log("instituteCourse data →", instituteCourse);
 
-//   // ✅ Empty state if no courses available
 //   if (status === Status.SUCCESS && instituteCourse.length === 0) {
 //     return (
 //       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -191,10 +66,9 @@
 //     );
 //   }
 
-//   // ✅ Success state with available courses
 //   if (status === Status.SUCCESS && instituteCourse.length > 0) {
 //     const { instituteName, instituteImage } = instituteCourse[0] || {};
-
+    
 //     return (
 //       <div className="min-h-screen bg-gray-50">
 //         {/* Hero Section */}
@@ -228,9 +102,24 @@
 //             {instituteCourse.map((course) => (
 //               <div
 //                 key={course.id || `${course.courseName}-${course.categoryName}`}
-//                 className="bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 p-6 flex flex-col justify-between"
+//                 className="bg-white rounded-lg shadow hover:shadow-lg transition-all duration-200 p-4 flex flex-col"
 //               >
-//                 <div>
+//                 {/* Thumbnail Image */}
+//                 <div className="w-full h-48 bg-gray-100 rounded-md overflow-hidden mb-4">
+//                   {course.courseThumbnail ? (
+//                     <img
+//                       src={course.courseThumbnail}
+//                       alt={course.courseName}
+//                       className="w-full h-full object-cover"
+//                     />
+//                   ) : (
+//                     <div className="w-full h-full flex items-center justify-center text-gray-400">
+//                       No Image
+//                     </div>
+//                   )}
+//                 </div>
+
+//                 <div className="flex-grow">
 //                   <h3 className="text-xl font-semibold text-gray-800 mb-2">
 //                     {course.courseName}
 //                   </h3>
@@ -258,9 +147,19 @@
 //                   </div>
 //                 </div>
 
-//                 <button className="mt-6 w-full text-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+//                 {/* <Link
+//                   href={`/institutes/${instituteId}/courses/${course.id}`}
+//                   className="mt-6 w-full text-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+//                 >
 //                   View Details
-//                 </button>
+//                 </Link> */}
+
+//               <Link
+//                 href={`/institutes/${instituteId}/courses/${course.id}`}
+//                 className="mt-6 w-full text-center bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+//               >
+//                 View Details
+//               </Link>
 //               </div>
 //             ))}
 //           </div>
@@ -269,14 +168,14 @@
 //     );
 //   }
 
-//   // Fallback (shouldn't happen)
 //   return null;
 // };
 
 // export default InstituteCourses;
 
 
-"use client";
+//2nd
+'use client';
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
@@ -362,9 +261,7 @@ const InstituteCourses = () => {
             </div>
           )}
           <div>
-            <h1 className="text-4xl font-bold text-gray-800">
-              {instituteName}
-            </h1>
+            <h1 className="text-4xl font-bold text-gray-800">{instituteName}</h1>
             <p className="text-gray-500 mt-1">Explore all available courses</p>
           </div>
         </div>
@@ -401,8 +298,7 @@ const InstituteCourses = () => {
                     {course.courseName}
                   </h3>
                   <p className="text-gray-600 mb-4 text-sm">
-                    {course.courseDescription?.substring(0, 120) ||
-                      "No description."}
+                    {course.courseDescription?.substring(0, 120) || "No description."}
                   </p>
 
                   <div className="space-y-2 text-sm text-gray-700">

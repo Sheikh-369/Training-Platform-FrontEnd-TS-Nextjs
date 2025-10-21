@@ -1,15 +1,15 @@
 import { Status } from "@/lib/global-types/type";
 
 export interface IInstituteCourseData{
-    id:number,
+    id?:number,
     courseName:string,
-    courseThumbnail:string, 
+    courseThumbnail?:string, 
     coursePrice:string, 
-    courseDuration:string, 
+    courseDuration?:string, 
     courseDescription:string,
     categoryName:string,
-    instituteName:string,
-    instituteImage:string | null            
+    instituteName?:string,
+    instituteImage?:string | null            
 }
 
 export interface IInstituteCourseSliceState{
