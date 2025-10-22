@@ -1,0 +1,246 @@
+'use client'
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { ICourseData } from "@/lib/store/owner/course/course-slice-type";
+import { fetchAllTeachers } from "@/lib/store/owner/teacher/teacher-slice";
+import { fetchCategory } from "@/lib/store/owner/category/category-slice";
+import { updateCourse } from "@/lib/store/owner/course/course-slice"; // your thunk
+
+interface EditCourseModalProps {
+  closeModal: () => void;
+  instituteNumber: string;
+  courseToEdit: ICourseData;
+}
+
+const EditCourseModal: React.FC<EditCourseModalProps> = ({
+  closeModal,
+  instituteNumber,
+  courseToEdit,
+}) => {
+  const dispatch = useAppDispatch();
+  const category = useAppSelector((state) => state.category.category || []);
+  const instituteTeacher = useAppSelector(
+    (state) => state.instituteTeacher.instituteTeacher || []
+  );
+  const [courseData, setCourseData] = useState<ICourseData>({
+    ...courseToEdit,
+    courseThumbnail: null, // For file input, reset to null
+  });
+
+  useEffect(() => {
+    dispatch(fetchAllTeachers(instituteNumber));
+    dispatch(fetchCategory(instituteNumber));
+  }, [dispatch, instituteNumber]);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "teacherId") {
+      const selectedTeacher = instituteTeacher.find(
+        (t) => t.id?.toString() === value
+      );
+      setCourseData((prev) => ({
+        ...prev,
+        teacherId: value,
+        teacherName: selectedTeacher?.teacherName || "",
+      }));
+    } else if (name === "categoryId") {
+      const selectedCategory = category.find((c) => c.id.toString() === value);
+      setCourseData((prev) => ({
+        ...prev,
+        categoryId: value,
+        categoryName: selectedCategory?.categoryName || "",
+      }));
+    } else {
+      setCourseData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setCourseData((prev) => ({
+      ...prev,
+      courseThumbnail: file,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("courseName", courseData.courseName);
+    formData.append("coursePrice", courseData.coursePrice);
+    formData.append("courseDuration", courseData.courseDuration);
+    formData.append("courseDescription", courseData.courseDescription);
+    formData.append("courseLevel", courseData.courseLevel);
+    formData.append("teacherId", courseData.teacherId.toString());
+    formData.append("teacherName", courseData.teacherName);
+    formData.append("categoryId", courseData.categoryId.toString());
+    formData.append("categoryName", courseData.categoryName);
+    if (courseData.courseThumbnail) {
+      formData.append("courseThumbnail", courseData.courseThumbnail);
+    }
+
+    await dispatch(updateCourse(instituteNumber, courseData.id.toString(), formData));
+    closeModal();
+  };
+
+  return (
+    <div
+      id="modal"
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+    >
+      <div className="fixed inset-0 bg-black/40" />
+
+      <div className="relative w-full max-w-md max-h-[80vh] overflow-y-auto overflow-x-hidden p-5 bg-gradient-to-br from-indigo-50 via-white to-indigo-100 rounded-xl shadow-2xl border border-indigo-300">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-indigo-900">Edit Course</h3>
+          <button
+            onClick={closeModal}
+            className="text-indigo-600 hover:text-indigo-900 transition"
+            aria-label="Close modal"
+          >
+            <svg
+              className="h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          {/* Same form layout as AddModal with prefilled values */}
+          {/* Row 1: Course Name + Price */}
+          <div className="flex flex-wrap gap-4">
+            <input
+              type="text"
+              name="courseName"
+              placeholder="Course Name"
+              value={courseData.courseName}
+              onChange={handleChange}
+              required
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+            <input
+              type="text"
+              name="coursePrice"
+              placeholder="Course Price"
+              value={courseData.coursePrice}
+              onChange={handleChange}
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+          </div>
+
+          {/* Row 2: Duration + Level */}
+          <div className="flex flex-wrap gap-4">
+            <input
+              type="text"
+              name="courseDuration"
+              placeholder="Course Duration"
+              value={courseData.courseDuration}
+              onChange={handleChange}
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            />
+            <select
+              name="courseLevel"
+              value={courseData.courseLevel}
+              onChange={handleChange}
+              required
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            >
+              <option value="">Select Course Level</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advance">Advance</option>
+            </select>
+          </div>
+
+          {/* Row 3: Category + Teacher */}
+          <div className="flex flex-wrap gap-4">
+            <select
+              name="categoryId"
+              value={courseData.categoryId.toString()}
+              onChange={handleChange}
+              required
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            >
+              <option value="">Select Category</option>
+              {category.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.categoryName}
+                </option>
+              ))}
+            </select>
+            <select
+              name="teacherId"
+              value={courseData.teacherId.toString()}
+              onChange={handleChange}
+              required
+              className="flex-1 min-w-[150px] p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            >
+              <option value="">Select Teacher</option>
+              {instituteTeacher.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.teacherName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Row 4: Description */}
+          <textarea
+            name="courseDescription"
+            placeholder="Course Description"
+            value={courseData.courseDescription}
+            onChange={handleChange}
+            className="w-full p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none resize-none"
+            rows={3}
+          />
+
+          {/* Row 5: File input */}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full p-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+          />
+
+          {/* Buttons */}
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              type="button"
+              onClick={closeModal}
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+            >
+              Update Course
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default EditCourseModal;

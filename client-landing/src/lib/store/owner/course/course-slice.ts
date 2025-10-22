@@ -109,21 +109,46 @@ export function addCourse(instituteNumber:string,courseData:ICourseData){
 //         }
 //     }
 // }
+export function deleteCourse(instituteNumber: string, id: string) {
+  return async function deleteCourseThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.delete(`institute/${instituteNumber}/course/${id}`);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchCourse(instituteNumber)); // Refresh data
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}
 
 // updateCourse
-// export function updateCourse(id: string, name: ICourseData) {
-//   return async function updateCourseThunk(dispatch: AppDispatch) {
-//     try {
-//       const response = await APIWITHTOKEN.patch("institute/course/"+id, name);
-//       if (response.status === 200) {
-//         dispatch(setStatus(Status.SUCCESS));
-//         dispatch(fetchCourse()); // Refresh data
-//       } else {
-//         dispatch(setStatus(Status.ERROR));
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       dispatch(setStatus(Status.ERROR));
-//     }
-//   };
-// }
+export function updateCourse(instituteNumber: string, id: string, formData: FormData) {
+  return async function updateCourseThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.patch(
+        `institute/${instituteNumber}/course/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(fetchCourse(instituteNumber)); // Refresh courses
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(setStatus(Status.ERROR));
+    }
+  };
+}

@@ -6,19 +6,49 @@ import { fetchCourse } from "@/lib/store/owner/course/course-slice";
 import { ICourseData } from "@/lib/store/owner/course/course-slice-type";
 import { Status } from "@/lib/global-types/type";
 import AddCourseModal from "./add-course-modal";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import EditCourseModal from "./edit-course-modal";
+import DeleteCourseModal from "./delete-course-modal";
 
 function InstituteCourse() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const instituteNumber = searchParams.get("instituteNumber");
-
   const { course, status } = useAppSelector((state) => state.courseOwner);
-
+  //for add modal
   const [isAddCourseModalOpen, setIsAddCourseModalOpen] = useState(false);
+  //for edit course modal
+  const [isEditCourseModalOpen, setIsEditCourseModalOpen] = useState(false);
+  const [courseToEdit, setCourseToEdit] = useState<ICourseData | null>(null);
+  //for delete course modal
+  const [isDeleteCourseModalOpen, setIsDeleteCourseModalOpen] = useState(false);
+  const [courseToDelete, setCourseToDelete] = useState<ICourseData | null>(null); 
+  //for search logic
   const [searchText, setSearchText] = useState<string>("");
-
+  //for add course modal
   const openAddCourseModal = () => setIsAddCourseModalOpen(true);
   const closeAddCourseModal = () => setIsAddCourseModalOpen(false);
+  //for edit course modal
+  const openEditCourseModal = (course: ICourseData) => {
+    setCourseToEdit(course);
+    setIsEditCourseModalOpen(true);
+  };
+
+  const closeEditCourseModal = () => {
+    setCourseToEdit(null);
+    setIsEditCourseModalOpen(false);
+  };
+
+  //for delete course modal
+    const openDeleteCourseModal = (course: ICourseData) => {
+    setCourseToDelete(course);
+    setIsDeleteCourseModalOpen(true);
+  };
+
+  const closeDeleteCourseModal = () => {
+    setCourseToDelete(null);
+    setIsDeleteCourseModalOpen(false);
+  };
 
   useEffect(() => {
     if (instituteNumber) {
@@ -44,6 +74,19 @@ function InstituteCourse() {
           closeModal={closeAddCourseModal}
           instituteNumber={String(instituteNumber)}
         />
+      )}
+            {/* Edit Modal */}
+      {isEditCourseModalOpen && courseToEdit && (
+        <EditCourseModal
+          closeModal={closeEditCourseModal}
+          instituteNumber={String(instituteNumber)}
+          courseToEdit={courseToEdit}
+        />
+      )}
+      
+      {/* Delete Course Modal */}
+      {isDeleteCourseModalOpen && courseToDelete && (
+        <DeleteCourseModal closeModal={closeDeleteCourseModal} instituteNumber={String(instituteNumber)} course={courseToDelete} />
       )}
 
       {/* ✅ Header */}
@@ -100,6 +143,7 @@ function InstituteCourse() {
                 <th className="px-4 py-3">Level</th>
                 <th className="px-4 py-3">Category</th>
                 <th className="px-4 py-3">Teacher</th>
+                <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -123,6 +167,22 @@ function InstituteCourse() {
                     <td className="px-4 py-3">{course.courseLevel}</td>
                     <td className="px-4 py-3">{course.categoryName}</td>
                     <td className="px-4 py-3">{course.teacherName}</td>
+                            {/* Actions column */}
+                    <td className="px-4 py-3 flex space-x-3">
+                      <button
+                        onClick={() => openEditCourseModal(course)}
+                        aria-label="Edit course"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        <FiEdit size={18} />
+                      </button>
+                      <button
+                        onClick={() => openDeleteCourseModal(course)}
+                        aria-label="Delete course"
+                        className="text-red-600 hover:text-red-800">
+                        <FiTrash2 size={18} />
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
