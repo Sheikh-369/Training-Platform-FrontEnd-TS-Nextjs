@@ -12,6 +12,7 @@ import instituteTeacherSlice from "../store/owner/teacher/teacher-slice";
 import instituteStudentSlice from "../store/owner/student/student-slice";
 import studentSlice from "../store/student/student-slice";
 import courseOwnerSlice from "../store/owner/course/course-slice";
+import order from "../store/student/order/order-slice"
 
 const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ const store = configureStore({
     instituteStudent: instituteStudentSlice,
     student: studentSlice,
     courseOwner: courseOwnerSlice,
+    studentOrder:order
   },
 });
 

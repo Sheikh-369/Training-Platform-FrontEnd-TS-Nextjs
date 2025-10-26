@@ -22,7 +22,9 @@
 }
 
 body {
-  background-image: linear-gradient(to bottom right, #eae9ef, #cdd2ee, #88b2e6);
+  /* background-image: linear-gradient(to bottom right, #eae9ef, #cdd2ee, #88b2e6); */
+background-image: linear-gradient(to top right, #aeddbe, #b4ede2);
+
   min-height: 100vh;
   margin: 0;
   padding: 0;

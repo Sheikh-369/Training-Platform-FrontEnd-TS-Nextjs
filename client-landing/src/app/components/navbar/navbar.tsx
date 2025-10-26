@@ -305,7 +305,7 @@ const Navbar = ({ onSearchChange }: NavbarProps) => {
                 {/* Logout with icon */}
                 <button
                   onClick={handleLogout}
-                  className="text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+                  className="text-red-600 hover:text-red-700 font-medium flex items-center gap-1 cursor-pointer"
                 >
                   <FaSignOutAlt />
                   Logout

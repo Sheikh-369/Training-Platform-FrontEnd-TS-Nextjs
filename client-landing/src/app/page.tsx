@@ -53,7 +53,7 @@ const HomePage = () => {
                 <Link
                   key={instituteNumber}
                   href={`/institutes/${instituteNumber}/courses`}
-                  className="group no-underline bg-white rounded-xl shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer border border-transparent hover:border-indigo-400"
+                  className="group no-underline bg-green-200 rounded-xl shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer border border-transparent hover:border-indigo-400"
                 >
                   <div>
                     {/* Smaller Image */}
@@ -77,7 +77,7 @@ const HomePage = () => {
                         <span className="text-indigo-500">📞</span> {institutePhoneNumber}
                       </p>
 
-                      <button className="mt-3 px-3 py-1.5 bg-indigo-500 text-white rounded-md text-xs font-medium hover:bg-indigo-600 transition w-full">
+                      <button className="mt-3 px-3 py-1.5 bg-green-800 text-white rounded-md text-xs font-medium hover:bg-green-900 transition w-full">
                         View Courses
                       </button>
                     </div>
